@@ -4,10 +4,14 @@
 <section class="home-intro" id="about">
     <div class="container">
         <div class="row align-items-center pb-5">
-
             <!-- Image principale -->
             <div class="col-12 col-lg-5 pt-4 pt-lg-0 animated" data-animation="fadeInUp" data-animation-delay="350">
-                <img src="{% static 'website/assets/imgs/about/pic1.png' %}" class="img-fluid pic" alt="">
+                <!-- Utilise l'image uploadée ou l'image par défaut -->
+                {% if about.main_image %}
+                    <img src="{{ about.main_image.url }}" class="img-fluid pic" alt="">
+                {% else %}
+                    <img src="{% static 'website/assets/imgs/about/pic1.png' %}" class="img-fluid pic" alt="">
+                {% endif %}
             </div>
 
             <!-- Texte principal -->
@@ -16,14 +20,14 @@
                     <div class="rightline pb-3">
                         <span>{{ about.section_title }}</span>
                     </div>
-
                     <h2>{{ about.about_title }}</h2>
-
                     <h5 class="pt-2">
                         {{ about.description }}
+                        {% if about.about_author %}
                         <br><br>
                         <strong>{{ about.about_author }}</strong><br>
                         {{ about.about_fonction }}
+                        {% endif %}
                     </h5>
                 </div>
             </div>
@@ -31,13 +35,14 @@
 
         <!-- Services dynamiques -->
         <div class="row pt-5">
-            {% for service in about.about_service %}
+            {% for service in about.serviceAbout %}
                 <div class="col-12 col-lg-4">
-                    <div class="service-block animated" data-animation="fadeInUp" data-animation-delay="{{ 200|add:forloop.counter0|add:forloop.counter0|add:forloop.counter0 }}">
+                    <div class="service-block animated" data-animation="fadeInUp" 
+                         data-animation-delay="{{ 200|add:forloop.counter0|add:forloop.counter0|add:forloop.counter0 }}">
                         <div class="pt-1 pb-5">
                             <div class="info">
                                 <div class="icon">
-                                    <img src="{% static 'website/assets/imgs/about/' %}{{ service.img }}" alt="">
+                                    <img src="{% static 'website/assets/imgs/about/' %}{{ service.img }}" alt="{{ service.title }}">
                                 </div>
                                 <div class="text">
                                     <h4>{{ service.title }}</h4>

@@ -1,84 +1,68 @@
 {% load static %}
 
- <!-- TEAM STARTS
-            ========================================================================= -->
-        <section class="team light-brown-bg mt-3" id="team">
-            <div class="container">
-                <div class="row">
-                    <div class="col-12">
-                        <div class="herotext text-center pb-5  animated" data-animation="fadeInUp" data-animation-delay="200">
-                            <div class="lrline pb-3"><span>Our Team</span></div>
-                            <h2>Meet our the best crew</h2>
-                            <h5 class="pt-2">Whatever item needs to be delivered or shipped, we're capable to do that!</h5>
-                        </div>
+<!-- TEAM STARTS ========================================================================= -->
+{% if team_section %}
+<section class="team light-brown-bg mt-3" id="team" style="background-color: {{ team_section.background_color }};">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="herotext text-center pb-5 animated" data-animation="fadeInUp" data-animation-delay="200">
+                    <div class="lrline pb-3">
+                        <span>{{ team_section.section_title }}</span>
                     </div>
-                </div>
-                <div class="team-carousel animated" data-animation="fadeInUp" data-animation-delay="300">
-                    <div class="block">
-                        <div class="pic pb-4"><img src="{% static 'website/assets/imgs/team/1.jpg' %}" class="img-fluid" alt=""></div>
-                        <div class="details">
-                            <h2>John</h2>
-                            <h6>CEO</h6>
-                            <ul class="socialmedia pt-2">
-                                <li><a href=""><i class="lab la-twitter"></i></a></li>
-                                <li><a href=""><i class="lab la-facebook-f"></i></a></li>
-                                <li><a href=""><i class="lab la-dribbble"></i></a></li>
-                                <li><a href=""><i class="lab la-behance"></i></a></li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="block">
-                        <div class="pic pb-4"><img src="{% static 'website/assets/imgs/team/2.jpg' %}" class="img-fluid" alt=""></div>
-                        <div class="details">
-                            <h2>Abigail</h2>
-                            <h6>Director</h6>
-                            <ul class="socialmedia pt-2">
-                                <li><a href=""><i class="lab la-linkedin-in"></i></a></li>
-                                <li><a href=""><i class="lab la-twitter"></i></a></li>
-                                <li><a href=""><i class="lab la-facebook-f"></i></a></li>
-                                <li><a href=""><i class="lab la-dribbble"></i></a></li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="block">
-                        <div class="pic pb-4"><img src="{% static 'website/assets/imgs/team/3.jpg' %}" class="img-fluid" alt=""></div>
-                        <div class="details">
-                            <h2>Anderson</h2>
-                            <h6>Manager</h6>
-                            <ul class="socialmedia pt-2">
-                                <li><a href=""><i class="lab la-twitter"></i></a></li>
-                                <li><a href=""><i class="lab la-facebook-f"></i></a></li>
-                                <li><a href=""><i class="lab la-dribbble"></i></a></li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="block">
-                        <div class="pic pb-4"><img src="{% static 'website/assets/imgs/team/4.jpg' %}" class="img-fluid" alt=""></div>
-                        <div class="details">
-                            <h2>Donna</h2>
-                            <h6>Analyst</h6>
-                            <ul class="socialmedia pt-2">
-                                <li><a href=""><i class="lab la-twitter"></i></a></li>
-                                <li><a href=""><i class="lab la-facebook-f"></i></a></li>
-                                <li><a href=""><i class="lab la-dribbble"></i></a></li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="block">
-                        <div class="pic pb-4"><img src="{% static 'website/assets/imgs/team/5.jpg' %}" class="img-fluid" alt=""></div>
-                        <div class="details">
-                            <h2>Bailey</h2>
-                            <h6>Manager</h6>
-                            <ul class="socialmedia pt-2">
-                                <li><a href=""><i class="lab la-twitter"></i></a></li>
-                                <li><a href=""><i class="lab la-facebook-f"></i></a></li>
-                                <li><a href=""><i class="lab la-dribbble"></i></a></li>
-                            </ul>
-                        </div>
-                    </div>
+                    <h2>{{ team_section.main_title }}</h2>
+                    <h5 class="pt-2">{{ team_section.description }}</h5>
                 </div>
             </div>
-        </section>
-        <!-- /.. TEAM ENDS
-            ========================================================================= -->
-
+        </div>
+        
+        {% with active_members=team_section.get_active_members %}
+        {% if active_members %}
+        <div class="team-carousel animated" data-animation="fadeInUp" data-animation-delay="300">
+            {% for member in active_members %}
+            <div class="block">
+                <div class="pic pb-4">
+                    {% if member.image %}
+                    <img src="{{ member.image.url }}" class="img-fluid" alt="{{ member.name }}">
+                    {% else %}
+                    <div class="placeholder-img" style="width: 100%; height: 300px; background: #ddd; display: flex; align-items: center; justify-content: center;">
+                        <span style="color: #666;">{{ member.name|first|upper }}</span>
+                    </div>
+                    {% endif %}
+                </div>
+                <div class="details">
+                    <h2>{{ member.name }}</h2>
+                    <h6>{{ member.position }}</h6>
+                    
+                    {% if member.get_social_media_list %}
+                    <ul class="socialmedia pt-2">
+                        {% for social in member.get_social_media_list %}
+                        <li>
+                            <a href="{{ social.url }}" target="_blank" rel="noopener noreferrer" title="{{ social.platform|title }}">
+                                <i class="{{ social.icon_class }}"></i>
+                            </a>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
+                    
+                    {% if member.bio %}
+                    <div class="bio mt-3" style="display: none; font-size: 0.9rem; color: #666;">
+                        {{ member.bio|truncatechars:100 }}
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <div class="text-center py-5">
+            <p class="text-muted">Aucun membre d'équipe n'est configuré.</p>
+            <a href="/admin/website/teammember/add/" class="btn btn-primary btn-sm">Ajouter un membre</a>
+        </div>
+        {% endif %}
+        {% endwith %}
+    </div>
+</section>
+{% endif %}
+<!-- /.. TEAM ENDS ========================================================================= -->

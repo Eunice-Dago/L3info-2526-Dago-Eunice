@@ -1,60 +1,70 @@
-<!-- CONTACT US STARTS
-            ========================================================================= -->
-        <section class="contact-us" id="contact">
-            <div class="container">
-                <div class="row">
-                    <div class="col-12 col-lg-6">
-                        <div class="herotext pb-4  animated" data-animation="fadeInUp" data-animation-delay="100">
-                            <div class="rightline pb-3"><span>Get In Touch</span></div>
-                            <h2>Talk or Meet with Us</h2>
-                        </div>
-                        <address class="clearfix d-flex align-items-center pb-2  animated" data-animation="fadeInUp" data-animation-delay="300">
-                            <div class="icon"><i class="las la-map-marker"></i></div>
-                            <div class="detail">
-                                <div class="heading">Get Us Here</div>
-                                1355 Market St, Suite 900<br>
-                                San Francisco, CA 94<br>
-                            </div>
-                        </address>
-                        <address class="clearfix d-flex align-items-center pb-2  animated" data-animation="fadeInUp" data-animation-delay="500">
-                            <div class="icon"><i class="las la-phone"></i></div>
-                            <div class="detail">
-                                <div class="heading">Call Us</div>
-                                +1 123 456 7890
-                            </div>
-                        </address>
-                        <address class="clearfix d-flex align-items-center  animated" data-animation="fadeInUp" data-animation-delay="700">
-                            <div class="icon"><i class="las la-envelope-open"></i></div>
-                            <div class="detail">
-                                <div class="heading">Write Us</div>
-                                <a href="mailto:info@thisone.com" target="_blank">info@thisone.com</a>
-                            </div>
-                        </address>
-                    </div>
-                    <div class="col-12 col-lg-6 pt-5 pt-lg-0">
-                        <div class="herotext pb-4  animated" data-animation="fadeInUp" data-animation-delay="300">
-                            <div class="rightline pb-3"><span>Estimate Project</span></div>
-                            <h2>Let Us Know Here</h2>
-                        </div>
-                        <form action='process.php' method='post' name='ContactForm' id='ContactForm' class="  animated" data-animation="fadeInUp" data-animation-delay="500">
-                            <div class="mb-3">
-                                <input type="text" class="form-control" name="name" placeholder="Enter your name *" >
-                            </div>
-                            <div class="mb-3">
-                                <input type="email" class="form-control" name="email" placeholder="Enter your email *" >
-                            </div>
-                            <div class="mb-3">
-                                <input type="text" class="form-control" name="website" placeholder="Enter your website" >
-                            </div>
-                            <div class="mb-3">
-                                <textarea class="form-control" name="comment" placeholder="Enter your message *" rows="3"></textarea>
-                            </div>
-                            <div id='message_post'></div>
-                            <button type='submit' value='Submit' name='submitf' id="submitf" class="btn btn-primary mt-3">SEND MESSAGE</button>
-                        </form>
-                    </div>
+{% load static %}
+
+<!-- CONTACT US STARTS -->
+<section class="contact-us" id="contact">
+    <div class="container">
+        <div class="row">
+            <div class="col-12 col-lg-6">
+                <div class="herotext pb-4 animated" data-animation="fadeInUp" data-animation-delay="100">
+                    <div class="rightline pb-3"><span>{{ contact.section_title }}</span></div>
+                    <h2>{{ contact.main_title }}</h2>
                 </div>
+                
+                <!-- Adresse -->
+                <address class="clearfix d-flex align-items-center pb-2 animated" data-animation="fadeInUp" data-animation-delay="300">
+                    <div class="icon"><i class="las la-map-marker"></i></div>
+                    <div class="detail">
+                        <div class="heading">{{ contact.address_title }}</div>
+                        {{ contact.address_line1 }}<br>
+                        {{ contact.address_line2 }}
+                    </div>
+                </address>
+                
+                <!-- Téléphone -->
+                <address class="clearfix d-flex align-items-center pb-2 animated" data-animation="fadeInUp" data-animation-delay="500">
+                    <div class="icon"><i class="las la-phone"></i></div>
+                    <div class="detail">
+                        <div class="heading">{{ contact.phone_title }}</div>
+                        <a href="tel:{{ contact.phone_number }}">{{ contact.phone_number }}</a>
+                    </div>
+                </address>
+                
+                <!-- Email -->
+                <address class="clearfix d-flex align-items-center animated" data-animation="fadeInUp" data-animation-delay="700">
+                    <div class="icon"><i class="las la-envelope-open"></i></div>
+                    <div class="detail">
+                        <div class="heading">{{ contact.email_title }}</div>
+                        <a href="mailto:{{ contact.email_address }}" target="_blank">{{ contact.email_address }}</a>
+                    </div>
+                </address>
             </div>
-        </section>
-        <!-- /.. CONTACT US ENDS
-            ========================================================================= -->
+            
+            <div class="col-12 col-lg-6 pt-5 pt-lg-0">
+                <div class="herotext pb-4 animated" data-animation="fadeInUp" data-animation-delay="300">
+                    <div class="rightline pb-3"><span>{{ contact.form_title }}</span></div>
+                    <h2>{{ contact.form_heading }}</h2>
+                </div>
+                
+                <!-- Formulaire de contact -->
+                <form action="{% url 'website:home' %}" method="post" name="ContactForm" id="ContactForm" class="animated" data-animation="fadeInUp" data-animation-delay="500">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <input type="text" class="form-control" name="name" placeholder="Enter your name *" required>
+                    </div>
+                    <div class="mb-3">
+                        <input type="email" class="form-control" name="email" placeholder="Enter your email *" required>
+                    </div>
+                    <div class="mb-3">
+                        <input type="url" class="form-control" name="website" placeholder="Enter your website">
+                    </div>
+                    <div class="mb-3">
+                        <textarea class="form-control" name="message" placeholder="Enter your message *" rows="3" required></textarea>
+                    </div>
+                    <div id="message_post"></div>
+                    <button type="submit" class="btn btn-primary mt-3">{{ contact.submit_button_text }}</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- /. CONTACT US ENDS -->

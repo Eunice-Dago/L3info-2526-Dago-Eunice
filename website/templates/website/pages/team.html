@@ -2,12 +2,12 @@
                 {% extends 'website/pages/base.html' %}
 
                 {% block 'contenu_principal' %}
-                    {% include 'website/sections/team/banner.html' %}
+                    {% include 'website/sections/about/banner.html'  %}
                     {% include 'website/sections/index/team_starts.html' %}
                     {% include 'website/sections/index/testimonial_starts.html' %}
                     {% include 'website/sections/index/clients_starts.html' %}
                 {% endblock %}
 
                    {% block 'script' %}
-            {% include 'website/partials/script.html'  %}
+            {% include 'website/partials/script_index.html'  %}
     {% endblock %}

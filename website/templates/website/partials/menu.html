@@ -1,61 +1,71 @@
 {% load static %}
+{% load navigation_tags %}
 
+{% get_site_settings as settings %}
+{% get_navigation_items as nav_items %}
 
-<!-- NAVIGATION STARTS
-            ========================================================================= -->
-        <nav id="navigation" class="navbar navbar-expand-lg navbar-light fixed-top bg-light">
-            <div class="container-fluid">
-                <a class="navbar-brand white-logo" href="index.html"><img src="{% static 'website/assets/imgs/logo-white.png' %}" class="img-fluid" alt=""></a>
-                <a class="navbar-brand black-logo" href="index.html"><img src="{% static 'website/assets/imgs/logo.png' %}" class="img-fluid" alt=""></a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="nav navbar-nav ms-auto">
-                        <li class="nav-item">
-                            <a class="nav-link active" href="index.html">Home </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="about.html" >About</a>
-                        </li>
+<!-- NAVIGATION STARTS -->	
+<nav id="navigation" class="navbar navbar-expand-lg navbar-light fixed-top bg-light">
+    <div class="container-fluid">
+        <!-- Logo blanc -->
+        <a class="navbar-brand white-logo" href="{% url 'website:home' %}">
+            {% if settings.logo_white %}
+                <img src="{{ settings.logo_white.url }}" class="img-fluid" alt="{{ settings.site_name }}">
+            {% else %}
+                <img src="{% static 'website/assets/imgs/logo-white.png' %}" class="img-fluid" alt="{{ settings.site_name }}">
+            {% endif %}
+        </a>
+        
+        <!-- Logo noir -->
+        <a class="navbar-brand black-logo" href="{% url 'website:home' %}">
+            {% if settings.logo %}
+                <img src="{{ settings.logo.url }}" class="img-fluid" alt="{{ settings.site_name }}">
+            {% else %}
+                <img src="{% static 'website/assets/imgs/logo.png' %}" class="img-fluid" alt="{{ settings.site_name }}">
+            {% endif %}
+        </a>
+        
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="nav navbar-nav ms-auto">
+                {% for item in nav_items %}
+                    {% if item.has_dropdown and item.children.all %}
                         <li class="nav-item dropdown">
-                            <a class="nav-link" href="our-services.html">
-                            Services <i class="las la-angle-down"></i>
+                            <a class="nav-link" href="{{ item|get_nav_url }}">
+                                {{ item.title }} <i class="las la-angle-down"></i>
                             </a>
                             <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="our-services.html">Services</a></li>
-                                <li><a class="dropdown-item" href="services-detail.html">Services Details</a></li>
+                                {% for child in item.children.all %}
+                                    {% if child.is_active %}
+                                    <li>
+                                        <a class="dropdown-item" href="{{ child|get_nav_url }}">
+                                            {{ child.title }}
+                                        </a>
+                                    </li>
+                                    {% endif %}
+                                {% endfor %}
                             </ul>
                         </li>
+                    {% else %}
                         <li class="nav-item">
-                            <a class="nav-link" href="gallery.html">Gallery</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="team.html">Team</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="pricing.html">Pricing</a>
-                        </li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link" href="blog.html">
-                            Blog <i class="las la-angle-down"></i>
+                            <a class="nav-link {% if request.path == item|get_nav_url %}active{% endif %}" 
+                               href="{{ item|get_nav_url }}">
+                                {{ item.title }}
                             </a>
-                            <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="blog.html">Blog Page</a></li>
-                                <li><a class="dropdown-item" href="single-blog-post-right-sidebar.html">Single Post 01</a></li>
-                                <li><a class="dropdown-item" href="single-blog-post-left-sidebar.html">Single Post 02</a></li>
-                                <li><a class="dropdown-item" href="single-blog-post-without-sidebar.html">Single Post 03</a></li>
-                            </ul>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="contact.html">Contact</a>
-                        </li>
-                    </ul>
-                    <span class="ps-3 d-none d-lg-block">
-                    <a href="https://themeforest.net/item/this-one-one-page-responsive-website-template/7236268?ref=alia" class="btn btn-primary" target="_blank">BUY NOW</a>
-                    </span>
-                </div>
-            </div>
-        </nav>
-        <!-- NAVIGATION ENDS
-            ========================================================================= -->
+                    {% endif %}
+                {% endfor %}
+            </ul>
+            
+            <span class="ps-3 d-none d-lg-block">
+                <a href="{{ settings.buy_button_url }}" class="btn btn-primary" target="_blank">
+                    {{ settings.buy_button_text }}
+                </a>
+            </span>
+        </div>
+    </div>
+</nav>
+<!-- NAVIGATION ENDS -->

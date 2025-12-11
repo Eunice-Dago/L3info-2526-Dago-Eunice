@@ -1,0 +1,31 @@
+# Django
+*.log
+*.pot
+*.pyc
+__pycache__/
+local_settings.py
+db.sqlite3
+media/
+staticfiles/
+
+# Environnement virtuel
+env/
+venv/
+.vscode/
+
+# IDE
+.idea/
+.DS_Store
+
+# Sécurité
+*.pem
+*.key
+secret_key.txt
+
+# Fichiers temporaires
+*.swp
+*.swo
+*~
+
+# Base de données (si autre que SQLite)
+*.db

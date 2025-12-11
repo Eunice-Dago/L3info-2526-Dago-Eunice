@@ -2,7 +2,7 @@
         {% extends 'website/pages/base.html' %}
 
         {% block 'contenu_principal' %}
-            {% include 'website/sections/services/banner.html' %}
+            {% include 'website/sections/about/banner.html' with banner=banners %}
             {% include 'website/sections/services/intro.html' %}
             {% include 'website/sections/index/service.html' %}
             {% include 'website/sections/index/feature.html' %}
@@ -11,5 +11,5 @@
         {% endblock %}
 
            {% block 'script' %}
-            {% include 'website/partials/script.html'  %}
+            {% include 'website/partials/script_index.html'  %}
     {% endblock %}

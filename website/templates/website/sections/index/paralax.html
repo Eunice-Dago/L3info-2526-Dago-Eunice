@@ -1,29 +1,34 @@
-{% load static %}
-        <!-- FEATURES STARTS
-            ========================================================================= -->
-        <section class="CTA-01 parallax-01">
-            <div class="container ps-md-0">
-                <div class="row">
-                    <div class="col-12 col-lg-6 offset-lg-6">
-                        <div class="block">
-                            <div class="herotext animated" data-animation="fadeInUp" data-animation-delay="200">
-                                <div class="rightline pb-3"><span>Why Choose us</span></div>
-                                <h2>We are logistic improving our skills to fulfil delivery of any level!</h2>
-                                <div class="description pt-2">We are Logistic Improving our skills to fulfil delivery of any level. We are Logistic Improving our skills to fulfil delivery of any level.</div>
-                                <div class="callus pt-5">
-                                    <div class="info">
-                                        <div class="icon"><i class="las la-phone"></i></div>
-                                        <div class="number">
-                                            <h4>BOOK THROUGH CALL</h4>
-                                            <div><a href="tel:+12345678910">+1 234 567 8910</a></div>
-                                        </div>
+<!-- CTA STARTS -->		
+<section class="CTA-01 parallax-01" 
+         {% if cta.background_image %}style="background-image: url('{{ cta.background_image.url }}')"{% endif %}>
+    <div class="container ps-md-0">
+        <div class="row">
+            <div class="col-12 col-lg-6 offset-lg-6">
+                <div class="block">
+                    <div class="herotext animated" data-animation="fadeInUp" data-animation-delay="200">
+                        <div class="rightline pb-3"><span>{{ cta.section_title }}</span></div>
+                        <h2>{{ cta.main_title }}</h2>
+                        <div class="description pt-2">{{ cta.description }}</div>
+                        
+                        {% if cta.phone_number %}
+                        <div class="callus pt-5">
+                            <div class="info">
+                                <div class="icon"><i class="las la-phone"></i></div>
+                                <div class="number">
+                                    <h4>{{ cta.phone_label }}</h4>
+                                    <div>
+                                        <a href="tel:{{ cta.get_phone_url }}">
+                                            {{ cta.phone_display }}
+                                        </a>
                                     </div>
                                 </div>
                             </div>
                         </div>
+                        {% endif %}
                     </div>
                 </div>
             </div>
-        </section>
-        <!-- /.. FEATURES ENDS
-            ========================================================================= -->
+        </div>
+    </div>
+</section>
+<!-- CTA ENDS -->

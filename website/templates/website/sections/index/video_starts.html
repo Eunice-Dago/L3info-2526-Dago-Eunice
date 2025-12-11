@@ -1,15 +1,22 @@
-{%load static%}
+{% load static %}
 
-  <!-- VIDEO STARTS
-            ========================================================================= -->
-        <section class="video bg-img text-center">
-            <div class="container">
-                <div class="row">
-                    <div class="col-12 animated" data-animation="fadeInUp" data-animation-delay="100">
-                        <h6><a class="popup-vimeo" href="https://vimeo.com/45830194"><i class="las la-play"></i>&nbsp;</a></h6>
-                    </div>
-                </div>
+<!-- VIDEO STARTS -->
+{% if video_section.is_active %}
+<section class="video bg-img text-center" style="{{ video_section.get_background_style }}">
+    <div class="container">
+        <div class="row">
+            <div class="col-12 animated" data-animation="fadeInUp" data-animation-delay="100">
+                <h6>
+                    <a class="popup-vimeo" href="{{ video_section.video_url }}">
+                        <i class="{{ video_section.play_icon }}"></i>
+                        {% if video_section.button_text %}
+                        &nbsp;{{ video_section.button_text }}
+                        {% endif %}
+                    </a>
+                </h6>
             </div>
-        </section>
-        <!-- /.. VIDEO ENDS
-            ========================================================================= -->
+        </div>
+    </div>
+</section>
+{% endif %}
+<!-- /.. VIDEO ENDS -->

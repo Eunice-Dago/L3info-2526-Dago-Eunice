@@ -1,101 +1,173 @@
 {% load static %}
+
 <section class="blog blog-inner-page">
     <div class="container">
         <div class="row">
             <div class="col-12 col-lg-10 offset-lg-1">
                 <div class="blog-post-detail">
+                    {% if article %}
+                    <!-- Image principale -->
                     <div class="pic pb-4 animated" data-animation="fadeInUp" data-animation-delay="300">
-                        <img src="{% static 'website/assets/imgs/blog/big/1.jpg' %}" class="img-fluid" alt="" >
+                        <img src="{{ article.image_principale.url }}" class="img-fluid" alt="{{ article.titre }}">
                     </div>
-                    <h2 class="pt-3 pb-3 animated" data-animation="fadeInUp" data-animation-delay="400">Cepteur sint occaecat cupidatat proident taken possession</h2>
-                    <p class=" animated" data-animation="fadeInUp" data-animation-delay="500">
-                        Cepteur sint occaecat cupidatat proident, taken possession,
-                        of my entire soul, like these sweet mornings of spring.
+                    
+                    <!-- Titre et description -->
+                    <h2 class="pt-3 pb-3 animated" data-animation="fadeInUp" data-animation-delay="400">{{ article.titre }}</h2>
+                    <p class="animated" data-animation="fadeInUp" data-animation-delay="500">
+                        {{ article.description_courte }}
                     </p>
+                    
+                    <!-- Citation -->
+                    {% if article.citation %}
                     <blockquote class="blockquote mt-4 mb-4 animated" data-animation="fadeInUp" data-animation-delay="600">
-                        <p>Cepteur sint occaecat cupidatat proident, taken possession of my entire soul</p>
+                        <p>{{ article.citation }}</p>
                     </blockquote>
+                    {% endif %}
+                    
+                    <!-- Images côte à côte -->
                     <div class="row pt-4 pb-4">
+                        {% if article.image_gauche %}
                         <div class="col-12 col-lg-6 animated" data-animation="fadeInUp" data-animation-delay="100">
                             <div class="pic">
-                                <img src="{% static 'website/assets/imgs/blog/big/2.jpg' %}" class="img-fluid" alt="" >
+                                <img src="{{ article.image_gauche.url }}" class="img-fluid" alt="{{ article.titre }}">
                             </div>
                         </div>
+                        {% endif %}
                         <div class="col-12 col-lg-6 ps-3 ps-lg-5 pt-4 pt-lg-0 animated" data-animation="fadeInUp" data-animation-delay="200">
-                            <h3>Cepteur sint occaecat cupidatat proident</h3>
-                            <p>
-                                Cepteur sint occaecat cupidatat proident, taken possession
-                                of my entire soul, like these sweet mornings.
-                            </p>
+                            <h3>{{ article.sous_titre|default:"Details" }}</h3>
+                            <p>{{ article.texte_sous_titre }}</p>
                         </div>
                     </div>
-                    <h3 class="pt-3 animated" data-animation="fadeInUp" data-animation-delay="300">Cepteur sint occaecat cupidatat proident</h3>
-                    <p class="animated" data-animation="fadeInUp" data-animation-delay="350">Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.</p>
-                    <!-- Tags & Share Start -->
+                    
+                    <!-- Contenu principal -->
+                    <h3 class="pt-3 animated" data-animation="fadeInUp" data-animation-delay="300">{{ article.titre }}</h3>
+                    <p class="animated" data-animation="fadeInUp" data-animation-delay="350">{{ article.contenu_principal|linebreaks }}</p>
+                    
+                    <!-- Tags & Share -->
                     <div class="row pt-4 pb-4 animated" data-animation="fadeInUp" data-animation-delay="400">
                         <div class="col-12 col-lg-6">
                             <ul class="list-inline">
                                 <li class="list-inline-item"><i class="las la-tags pt-2"></i></li>
-                                <li class="list-inline-item"><a href="#">UI/UX</a></li>
-                                <li class="list-inline-item"><a href="#">Technology</a></li>
-                                <li class="list-inline-item"><a href="#">Graphics</a></li>
+                                {% for tag in article.tags_list %}
+                                <li class="list-inline-item"><a href="#">{{ tag }}</a></li>
+                                {% endfor %}
                             </ul>
                         </div>
                         <div class="col-12 col-lg-6">
                             <ul class="list-inline">
                                 <li class="list-inline-item"><i class="las la-share-alt"></i></li>
-                                <li class="list-inline-item"><a href="#">Facebook</a></li>
-                                <li class="list-inline-item"><a href="#">Twitter</a></li>
-                                <li class="list-inline-item"><a href="#">Linkedin</a></li>
+                                {% if article.facebook_auteur %}
+                                <li class="list-inline-item"><a href="{{ article.facebook_auteur }}">Facebook</a></li>
+                                {% endif %}
+                                {% if article.twitter_auteur %}
+                                <li class="list-inline-item"><a href="{{ article.twitter_auteur }}">Twitter</a></li>
+                                {% endif %}
+                                {% if article.linkedin_auteur %}
+                                <li class="list-inline-item"><a href="{{ article.linkedin_auteur }}">Linkedin</a></li>
+                                {% endif %}
                             </ul>
                         </div>
                     </div>
-                    <!-- About Author Starts -->
+                    {% endif %}
+                    
+                    <!-- About Author -->
+                    {% if article and article.photo_auteur %}
                     <div class="light-grey-bg p-4 animated" data-animation="fadeInUp" data-animation-delay="100">
                         <div class="row align-items-center">
                             <div class="col-3">
-                                <img src="{% static 'website/assets/imgs/blog/author/author.jpg' %}" class="img-fluid" alt="...">
+                                <img src="{{ article.photo_auteur.url }}" class="img-fluid" alt="{{ article.nom_auteur }}">
                             </div>
                             <div class="col-9">
-                                <h3>About Author</h3>
-                                <p>Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.</p>
+                                <h3>À propos de l'auteur</h3>
+                                <p>{{ article.bio_auteur|default:article.nom_auteur }}</p>
                             </div>
                         </div>
                     </div>
-                    <!-- Comments Starts -->
+                    {% endif %}
+                    
+                    <!-- Commentaires existants -->
                     <div class="row comments pt-5 pb-5 animated" data-animation="fadeInUp" data-animation-delay="200">
                         <div class="col-12">
-                            <h3>Comments</h3>
+                            <h3>Commentaires ({{ commentaires.count }})</h3>
                             <ul class="list-group list-group-flush">
-                                ...existing code...
+                                {% for commentaire in commentaires %}
+                                <li class="list-group-item">
+                                    <div class="row">
+                                        <div class="col-3 col-md-2 col-lg-1 p-0">
+                                            <!-- Photo du commentateur (optionnel) -->
+                                        </div>
+                                        <div class="col-9 col-md-10 col-lg-11 ps-4">
+                                            <div class="d-flex w-100 justify-content-between">
+                                                <h4 class="mb-1">{{ commentaire.nom }}</h4>
+                                                <small>{{ commentaire.date_creation|timesince }} ago</small>
+                                            </div>
+                                            <p class="mt-2">{{ commentaire.message }}</p>
+                                            {% if commentaire.site_web %}
+                                            <small>Site: <a href="{{ commentaire.site_web }}">{{ commentaire.site_web }}</a></small>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Réponses (nested comments) -->
+                                    {% if commentaire.has_replies %}
+                                    <ul class="list-group list-group-flush ps-4">
+                                        {% for reponse in commentaire.reponses.all %}
+                                        {% if reponse.approuve %}
+                                        <li class="list-group-item">
+                                            <div class="row">
+                                                <div class="col-3 col-md-2 col-lg-1 p-0"></div>
+                                                <div class="col-9 col-md-10 col-lg-11 ps-4">
+                                                    <div class="d-flex w-100 justify-content-between">
+                                                        <h4 class="mb-1">{{ reponse.nom }}</h4>
+                                                        <small>{{ reponse.date_creation|timesince }} ago</small>
+                                                    </div>
+                                                    <p class="mt-2">{{ reponse.message }}</p>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        {% endif %}
+                                        {% endfor %}
+                                    </ul>
+                                    {% endif %}
+                                </li>
+                                {% empty %}
+                                <li class="list-group-item">
+                                    <p class="text-muted">Aucun commentaire pour le moment. Soyez le premier à commenter!</p>
+                                </li>
+                                {% endfor %}
                             </ul>
                         </div>
                     </div>
-                    <!-- Post Comments Ends -->
-                    <!-- Post Comments Starts -->
+                    
+                    <!-- Formulaire de commentaire -->
                     <div class="row post-comment pb-5 animated" data-animation="fadeInUp" data-animation-delay="100">
                         <div class="col-12">
-                            <h3>Post Comment</h3>
-                            <div class="row g-4">
-                                <div class="col-md-4">
-                                    <input type="text" class="form-control" id="name" placeholder="Enter your name">
+                            <h3>Laisser un commentaire</h3>
+                            <form method="post" action="{% url 'website:home' %}">
+                                {% csrf_token %}
+                                {% if article %}
+                                <input type="hidden" name="article_id" value="{{ article.id }}">
+                                {% endif %}
+                                <div class="row g-4">
+                                    <div class="col-md-4">
+                                        <input type="text" name="nom" class="form-control" placeholder="Votre nom" required>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <input type="email" name="email" class="form-control" placeholder="Votre email">
+                                    </div>
+                                    <div class="col-md-4">
+                                        <input type="url" name="site_web" class="form-control" placeholder="Votre site web">
+                                    </div>
+                                    <div class="col-md-12">
+                                        <textarea name="message" class="form-control" placeholder="Votre commentaire" rows="3" required></textarea>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <button type="submit" class="btn btn-primary">PUBLIER</button>
+                                    </div>
                                 </div>
-                                <div class="col-md-4">
-                                    <input type="email" class="form-control" id="email" placeholder="Enter your email">
-                                </div>
-                                <div class="col-md-4">
-                                    <input type="email" class="form-control" id="website" placeholder="Enter your website" >
-                                </div>
-                                <div class="col-md-12">
-                                    <textarea class="form-control" id="comment" placeholder="Enter your comment" rows="3"></textarea>
-                                </div>
-                                <div class="col-md-12">
-                                    <button type="submit" class="btn btn-primary">SUBMIT</button>
-                                </div>
-                            </div>
+                            </form>
                         </div>
                     </div>
-                    <!-- Post Comments Ends -->
                 </div>
             </div>
         </div>

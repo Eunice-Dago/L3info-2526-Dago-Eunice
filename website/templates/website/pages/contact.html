@@ -1,7 +1,7 @@
 {% extends 'website/pages/base.html' %}
 
     {% block 'contenu_principal' %}
-        {% include 'website/sections/about/banner.html' %}
+        {% include 'website/sections/about/banner.html' with banner=banners  %}
         {% include 'website/sections/about/contact.html' %}
         {% include 'website/sections/about/map.html' %}
     {% endblock %}

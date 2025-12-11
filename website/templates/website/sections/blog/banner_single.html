@@ -1,27 +1,286 @@
 {% load static %}
-<div class="inner-banner-style blog-post-banner" id="top">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-12">
-                <div class="info text-center animated" data-animation="fadeInUp" data-animation-delay="200">
-                    <div class="lrline pb-3"><span>Air Freight</span></div>
-                    <h2>For the First Time, Lilly Pulitzer <br class="d-none d-lg-block">Hosts a Resort Preview</h2>
-                    <ul class="meta">
-                        <li>
-                            <a href=""><i class="las la-user-alt"></i> John</a>
-                        </li>
-                        <li>
-                            <a href=""><i class="las la-calendar"></i> 10 Jan, 2020</a>
-                        </li>
-                        <li>
-                            <a href=""><i class="lar la-comment"></i> 3</a>
-                        </li>
-                        <li>
-                            <a href=""><i class="lar la-eye"></i> 5.5K</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
+
+<!-- CSS intégré pour la bannière -->
+<style>
+    /* Style principal de la bannière */
+    .blog-banner-section {
+        position: relative;
+        min-height: 600px;
+        height: 80vh;
+        max-height: 800px;
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        color: white;
+        overflow: hidden;
+        margin-bottom: 60px;
+    }
+
+    .blog-banner-section::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(
+            to bottom,
+            rgba(0, 0, 0, 0.3) 0%,
+            rgba(0, 0, 0, 0.7) 100%
+        );
+        z-index: 1;
+    }
+
+    .blog-banner-content {
+        position: relative;
+        z-index: 2;
+        padding: 40px 20px;
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+
+    /* Badge de catégorie */
+    .blog-banner-category {
+        color: white;
+        padding: 12px 30px;
+        border-radius: 30px;
+        display: inline-block;
+        font-size: 0.9rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 1.5px;
+        margin-bottom: 30px;
+        box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);
+        border: 2px solid rgba(255, 255, 255, 0.2);
+    }
+
+    /* Titre principal */
+    .blog-banner-title {
+        color: white;
+        font-size: 3.5rem;
+        font-weight: 700;
+        line-height: 1.2;       
+         margin: 25px 0 40px 0;
+        letter-spacing: -0.5px;
+    }
+
+    .blog-banner-title br {
+        display: block;
+        margin: 15px 0;
+    }
+
+    /* Métadonnées */
+    .blog-banner-meta {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 30px;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        color: rgba(255, 255, 255, 0.95);
+        font-size: 1.1rem;
+        font-weight: 400;
+        margin-bottom: 40px;
+    }
+
+    .blog-banner-meta-item {
+        display: inline-flex;
+        align-items: center;
+        margin: 0;
+    }
+
+    .blog-banner-meta-link {
+        color: rgba(255, 255, 255, 0.95);
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        transition: all 0.3s ease;
+        padding: 10px 20px;
+        border-radius: 25px;
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.15);
+    }
+
+    .blog-banner-meta-link:hover {
+        color: #D4AF37;
+        background: rgba(255, 255, 255, 0.2);
+        transform: translateY(-3px);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+    }
+
+   
+
+    /* Bouton d'action */
+    .blog-banner-button {
+        display: inline-block;
+        padding: 16px 40px;
+        background: linear-gradient(135deg, #d43737 0%, #b80b0b 100%);
+        color: white;
+        text-decoration: none;
+        border-radius: 35px;
+        font-weight: 700;
+        font-size: 1.1rem;
+        text-transform: uppercase;
+        letter-spacing: 1.2px;
+        border: none;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        box-shadow: 0 8px 25px rgba(212, 175, 55, 0.4);
+        position: relative;
+        overflow: hidden;
+        z-index: 1;
+        margin-top: 20px;
+    }
+
+    .blog-banner-button::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+        transition: all 0.6s ease;
+        z-index: -1;
+    }
+
+    .blog-banner-button:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 12px 30px rgba(212, 175, 55, 0.6);
+        color: white;
+    }
+
+    .blog-banner-button:hover::before {
+        left: 100%;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 1200px) {
+        .blog-banner-title {
+            font-size: 3rem;
+        }
+    }
+
+    @media (max-width: 992px) {
+        .blog-banner-section {
+            min-height: 500px;
+            height: 60vh;
+        }
+        
+        .blog-banner-title {
+            font-size: 2.5rem;
+        }
+        
+        .blog-banner-meta {
+            gap: 20px;
+        }
+    }
+
+    @media (max-width: 768px) {
+        .blog-banner-section {
+            min-height: 450px;
+            height: 50vh;
+        }
+        
+        .blog-banner-title {
+            font-size: 2rem;
+        }
+        
+        .blog-banner-category {
+            font-size: 0.8rem;
+            padding: 10px 20px;
+        }
+        
+        .blog-banner-meta {
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .blog-banner-meta-item {
+            width: 100%;
+            justify-content: center;
+        }
+        
+        .blog-banner-button {
+            padding: 14px 30px;
+            font-size: 1rem;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .blog-banner-title {
+            font-size: 1.8rem;
+        }
+        
+        .blog-banner-category {
+            font-size: 0.75rem;
+            padding: 8px 16px;
+        }
+        
+        .blog-banner-meta-link {
+            padding: 8px 16px;
+            font-size: 0.95rem;
+        }
+    }
+</style>
+
+<!-- HTML de la bannière -->
+{% if blog_banner and blog_banner.is_active %}
+<div class="blog-banner-section" {% if blog_banner.background_image %}style="background-image: url('{{ blog_banner.background_image.url }}');"{% else %}style="background-color: {{ blog_banner.background_color|default:'#1a1a1a' }};"{% endif %}>
+    <div class="blog-banner-content">
+        <!-- Badge de catégorie -->
+        <div class="blog-banner-category">
+            {{ blog_banner.category }}
         </div>
+        
+        <!-- Titre principal -->
+        <h1 class="blog-banner-title">
+            {{ blog_banner.title|safe|linebreaksbr }}
+        </h1>
+        
+        <!-- Métadonnées -->
+        <ul class="blog-banner-meta">
+            <li class="blog-banner-meta-item">
+                <a href="#" class="blog-banner-meta-link">
+                    <i class="las la-user-alt blog-banner-meta-icon"></i>
+                    {{ blog_banner.author|default:"Auteur" }}
+                </a>
+            </li>
+            <li class="blog-banner-meta-item">
+                <a href="#" class="blog-banner-meta-link">
+                    <i class="las la-calendar blog-banner-meta-icon"></i>
+                    {{ blog_banner.formatted_date }}
+                </a>
+            </li>
+            <li class="blog-banner-meta-item">
+                <a href="#" class="blog-banner-meta-link">
+                    <i class="lar la-comment blog-banner-meta-icon"></i>
+                    {{ blog_banner.comment_count }} commentaire{{ blog_banner.comment_count|pluralize:"s" }}
+                </a>
+            </li>
+            <li class="blog-banner-meta-item">
+                <a href="#" class="blog-banner-meta-link">
+                    <i class="lar la-eye blog-banner-meta-icon"></i>
+                    {{ blog_banner.formatted_views }} vue{{ blog_banner.view_count|pluralize:"s" }}
+                </a>
+            </li>
+        </ul>
+        
+        <!-- Bouton d'action (optionnel) -->
+        {% if blog_banner.article_url %}
+        <a href="{{ blog_banner.article_url }}" class="blog-banner-button" target="_blank">
+            Lire l'article complet
+            <i class="las la-arrow-right" style="margin-left: 10px;"></i>
+        </a>
+        {% endif %}
     </div>
 </div>
+{% endif %}

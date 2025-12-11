@@ -1,80 +1,31 @@
 {% load static %}
-        <!-- SERVICES STARTS
-            ========================================================================= -->
-        <section class="home-services pt-4 pb-4" id="services">
-            <div class="container-fluid">
-                <div class="row  pb-5">
-                    <div class="col-12">
-                        <div class="herotext text-center animated" data-animation="fadeInUp" data-animation-delay="100" >
-                            <div class="lrline pb-3"><span>START SHIPPING WITH US</span></div>
-                            <h2>We are covering all <br>logistics solutions for you</h2>
-                            <h5 class="pt-2">Whatever item needs to be delivered or shipped, we're capable to do that!</h5>
-                        </div>
-                    </div>
-                </div>
-                <div class="services-carousel animated" data-animation="fadeInUp" data-animation-delay="300">
-                    <div class="block">
-                        <div class="info">
-                            <h2>Air Freight</h2>
-                            <div class="description">Lorem ipsum dolor sit amet</div>
-                            <a href="services-detail.html">Read More</a>
-                        </div>
-                        <div class="picture">
-                            <img src="{% static 'website/assets/imgs/services/1.jpg' %}" class="img-fluid pic" alt="">
-                        </div>
-                    </div>
-                    <div class="block">
-                        <div class="info">
-                            <h2>Maritime Freight</h2>
-                            <div class="description">Consectetur adipiscing elit</div>
-                            <a href="services-detail.html">Read More</a>
-                        </div>
-                        <div class="picture">
-                            <img src="{% static 'website/assets/imgs/services/2.jpg' %}" class="img-fluid pic" alt="">
-                        </div>
-                    </div>
-                    <div class="block">
-                        <div class="info">
-                            <h2>Ground Freigth</h2>
-                            <div class="description">Sed do eiusmod tempor.</div>
-                            <a href="services-detail.html">Read More</a>
-                        </div>
-                        <div class="picture">
-                            <img src="{% static 'website/assets/imgs/services/3.jpg' %}" class="img-fluid pic" alt="">
-                        </div>
-                    </div>
-                    <div class="block">
-                        <div class="info">
-                            <h2>Home Delivery</h2>
-                            <div class="description">Lorem ipsum dolor sit amet</div>
-                            <a href="services-detail.html">Read More</a>
-                        </div>
-                        <div class="picture">
-                            <img src="{% static 'website/assets/imgs/services/4.jpg' %}" class="img-fluid pic" alt="">
-                        </div>
-                    </div>
-                    <div class="block">
-                        <div class="info">
-                            <h2>Warehouse</h2>
-                            <div class="description">Consectetur adipiscing elit</div>
-                            <a href="services-detail.html">Read More</a>
-                        </div>
-                        <div class="picture">
-                            <img src="{% static 'website/assets/imgs/services/5.jpg' %}" class="img-fluid pic" alt="">
-                        </div>
-                    </div>
-                    <div class="block">
-                        <div class="info">
-                            <h2>Support 24x7</h2>
-                            <div class="description">Sed do eiusmod tempor</div>
-                            <a href="services-detail.html">Read More</a>
-                        </div>
-                        <div class="picture">
-                            <img src="{% static 'website/assets/imgs/services/6.jpg' %}" class="img-fluid pic" alt="">
-                        </div>
-                    </div>
+
+<!-- COLLECTIONS STARTS -->	
+<section class="home-services pt-4 pb-4" id="services">
+    <div class="container-fluid">
+        <div class="row pb-5">
+            <div class="col-12">
+                <div class="herotext text-center animated" data-animation="fadeInUp" data-animation-delay="100">
+                    <div class="lrline pb-3"><span>{{ collection.section_title }}</span></div>
+                    <h2>{{ collection.main_title }}</h2>
+                    <h5 class="pt-2">{{ collection.description }}</h5>
                 </div>
             </div>
-        </section>
-        <!-- /.. SERVICES ENDS
-            ========================================================================= -->
+        </div>
+        <div class="services-carousel animated" data-animation="fadeInUp" data-animation-delay="300">
+            {% for item in collection.items.all %}
+            <div class="block">
+                <div class="info">
+                    <h2>{{ item.title }}</h2>
+                    <div class="description">{{ item.description }}</div>
+                    <a href="{{ item.link|default:'#' }}">Découvrir</a>
+                </div>
+                <div class="picture">
+                    <img src="{{ item.image.url }}" class="img-fluid pic" alt="{{ item.title }}">
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+<!-- COLLECTIONS ENDS -->

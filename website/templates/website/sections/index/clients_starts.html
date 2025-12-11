@@ -1,27 +1,29 @@
-{%load static%}
-     <!-- CLIENTS STARTS
-            ========================================================================= -->
-        <section class="clients pt-0">
-            <div class="container">
-                <div class="row">
-                    <div class="col-12  animated" data-animation="fadeInUp" data-animation-delay="100">
-                        <div class="herotext text-center">
-                            <div class="lrline pb-3"><span>Awards</span></div>
-                            <h2>International awards 2024</h2>
-                        </div>
-                    </div>
-                </div>
-                <div class="row text-center pt-5">
-                    <div class="col-6 col-md-3  animated" data-animation="fadeInUp" data-animation-delay="200"><img src="{% static 'website/assets/imgs/clients/1.jpg' %}" class="img-fluid" alt=""></div>
-                    <div class="col-6 col-md-3  animated" data-animation="fadeInUp" data-animation-delay="300"><img src="{% static 'website/assets/imgs/clients/2.jpg' %}" class="img-fluid" alt=""></div>
-                    <div class="col-6 col-md-3  animated" data-animation="fadeInUp" data-animation-delay="400"><img src="{% static 'website/assets/imgs/clients/3.jpg' %}" class="img-fluid" alt=""></div>
-                    <div class="col-6 col-md-3  animated" data-animation="fadeInUp" data-animation-delay="500"><img src="{% static 'website/assets/imgs/clients/4.jpg' %}" class="img-fluid" alt=""></div>
-                    <div class="col-6 col-md-3  animated" data-animation="fadeInUp" data-animation-delay="600"><img src="{% static 'website/assets/imgs/clients/5.jpg' %}" class="img-fluid" alt=""></div>
-                    <div class="col-6 col-md-3  animated" data-animation="fadeInUp" data-animation-delay="700"><img src="{% static 'website/assets/imgs/clients/6.jpg' %}" class="img-fluid" alt=""></div>
-                    <div class="col-6 col-md-3  animated" data-animation="fadeInUp" data-animation-delay="800"><img src="{% static 'website/assets/imgs/clients/7.jpg' %}" class="img-fluid" alt=""></div>
-                    <div class="col-6 col-md-3  animated" data-animation="fadeInUp" data-animation-delay="900"><img src="{% static 'website/assets/imgs/clients/8.jpg' %}" class="img-fluid" alt=""></div>
+{% load static %}
+
+<!-- CLIENTS STARTS -->
+<section class="clients pt-0">
+    <div class="container">
+        <div class="row">
+            <div class="col-12 animated" data-animation="fadeInUp" data-animation-delay="100">
+                <div class="herotext text-center">
+                    <div class="lrline pb-3"><span>Awards</span></div>
+                    <h2>International awards 2024</h2>
                 </div>
             </div>
-        </section>
-        <!-- /.. CLIENTS ENDS
-            ========================================================================= -->
+        </div>
+        <div class="row text-center pt-5">
+            {% for client in clients %}
+            <div class="col-6 col-md-3 animated" data-animation="fadeInUp" data-animation-delay="{% cycle '300' '400' '100' '200' '100' '200' %}">
+                {% if client.url %}
+                <a href="{{ client.url }}" target="_blank" rel="noopener">
+                    <img src="{{ client.logo.url }}" class="img-fluid" alt="{{ client.name }}" title="{{ client.name }}">
+                </a>
+                {% else %}
+                <img src="{{ client.logo.url }}" class="img-fluid" alt="{{ client.name }}" title="{{ client.name }}">
+                {% endif %}
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+<!-- /.. CLIENTS ENDS -->

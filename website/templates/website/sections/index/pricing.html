@@ -1,75 +1,40 @@
 {% load static %}
 
-        <!-- PRICING STARTS
-            ========================================================================= -->
-        <section class="pricing" id="pricing">
-            <div class="container">
-                <div class="row">
-                    <div class="col-12">
-                        <div class="herotext text-center  animated" data-animation="fadeInUp" data-animation-delay="100">
-                            <div class="lrline pb-3"><span>Cheap Pricing</span></div>
-                            <h2>Explore our membership pricing plans</h2>
-                            <h5 class="pt-2">Whatever item needs to be delivered or shipped, we're capable to do that!</h5>
-                        </div>
-                    </div>
-                </div>
-                <div class="row pt-5 g-0 g-lg-5">
-                    <div class="col col-md-4 text-start">
-                        <div class="block  animated" data-animation="fadeInUp" data-animation-delay="300">
-                            <div class="herotext p-4 pb-2">
-                                <h4>Basic</h4>
-                                <h2>$49<span>/month</span></h2>
-                                <p>All plans include a 30 day trial!</p>
-                            </div>
-                            <ul class="pt-4">
-                                <li><i class="lar la-check-circle"></i> 15 Active Projects</li>
-                                <li><i class="lar la-check-circle"></i> 3GB of Space</li>
-                                <li><i class="lar la-check-circle"></i> Unlimited Users</li>
-                                <li><i class="lar la-check-circle"></i> Time Tracking</li>
-                                <li><i class="lar la-check-circle"></i> Chat Support</li>
-                                <li>&nbsp;</li>
-                            </ul>
-                            <div><a href="#" class="btn btn-primary w-100 mt-3">CHOOSE PLAN</a></div>
-                        </div>
-                    </div>
-                    <div class="col col-md-4 text-start">
-                        <div class="block best  animated" data-animation="fadeInUp" data-animation-delay="500">
-                            <div class="herotext p-4  pb-2">
-                                <h4>Popular</h4>
-                                <h2>$99<span>/month</span></h2>
-                                <p>All plans include a 30 day trial!</p>
-                            </div>
-                            <ul class="pt-4">
-                                <li><i class="lar la-check-circle"></i> 35 Active Projects</li>
-                                <li><i class="lar la-check-circle"></i> 10GB of Space</li>
-                                <li><i class="lar la-check-circle"></i> Unlimited Users</li>
-                                <li><i class="lar la-check-circle"></i> Time Tracking</li>
-                                <li><i class="lar la-check-circle"></i> SSL Security</li>
-                                <li><i class="lar la-check-circle"></i> Chat Support</li>
-                            </ul>
-                            <div><a href="#" class="btn btn-primary w-100 mt-3">CHOOSE PLAN</a></div>
-                        </div>
-                    </div>
-                    <div class="col col-md-4  text-start">
-                        <div class="block  animated" data-animation="fadeInUp" data-animation-delay="700">
-                            <div class="herotext p-4 pb-2">
-                                <h4>Enterprise</h4>
-                                <h2>$199<span>/month</span></h2>
-                                <p>All plans include a 30 day trial!</p>
-                            </div>
-                            <ul class="pt-4">
-                                <li><i class="lar la-check-circle"></i> Unlimited Projects</li>
-                                <li><i class="lar la-check-circle"></i> 50GB of Space</li>
-                                <li><i class="lar la-check-circle"></i> Unlimited Users</li>
-                                <li><i class="lar la-check-circle"></i> Time Tracking</li>
-                                <li><i class="lar la-check-circle"></i> SSL Security</li>
-                                <li><i class="lar la-check-circle"></i> Chat Support</li>
-                            </ul>
-                            <div><a href="#" class="btn btn-primary w-100 mt-3">CHOOSE PLAN</a></div>
-                        </div>
-                    </div>
+<!-- PRICING STARTS -->
+<section class="pricing" id="pricing">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="herotext text-center animated" data-animation="fadeInUp" data-animation-delay="100">
+                    <div class="lrline pb-3"><span>Cheap Pricing</span></div>
+                    <h2>Explore our membership pricing plans</h2>
+                    <h5 class="pt-2">Whatever item needs to be delivered or shipped, we're capable to do that!</h5>
                 </div>
             </div>
-        </section>
-        <!-- /.. PRICING ENDS
-            ========================================================================= -->
+        </div>
+        <div class="row pt-5 g-0 g-lg-5">
+            {% for plan in pricing_plans %}
+            <div class="col col-md-4 text-start">
+                <div class="block {% if plan.plan_type == 'popular' %}best{% endif %} animated" 
+                     data-animation="fadeInUp" data-animation-delay="{% cycle '300' '400' '100' '200' '100' '200' %}">
+                    <div class="herotext p-4 pb-2">
+                        <h4>{{ plan.title }}</h4>
+                        <h2>${{ plan.price }}<span>{{ plan.period }}</span></h2>
+                        <p>{{ plan.description }}</p>
+                    </div>
+                    <ul class="pt-4">
+                        {% for feature in plan.get_features_list %}
+                        <li><i class="lar la-check-circle"></i> {{ feature }}</li>
+                        {% endfor %}
+                        {% if plan.plan_type == 'basic' %}
+                        <li>&nbsp;</li>  <!-- Ligne vide pour l'alignement -->
+                        {% endif %}
+                    </ul>
+                    <div><a href="{{ plan.button_url }}" class="btn btn-primary w-100 mt-3">{{ plan.button_text }}</a></div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+<!-- /. PRICING ENDS -->

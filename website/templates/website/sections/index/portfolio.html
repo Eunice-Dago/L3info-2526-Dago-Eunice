@@ -1,300 +1,83 @@
 {% load static %}
 
-
-<!-- PORTFOLIO STARTS
-            ========================================================================= -->
-        <section id="portfolio" class="portfolio pb-0">
-            <div class="container-fluid">
-                <div class="row">
-                    <div class="col-12">
-                        <div class="herotext text-center  animated" data-animation="fadeInUp" data-animation-delay="100">
-                            <div class="lrline pb-3"><span>Our Gallery</span></div>
-                            <h2>Seamless logistics, faster deliveries</h2>
-                            <h5 class="pt-2">Whatever item needs to be delivered or shipped, we're capable to do that!</h5>
-                        </div>
-                    </div>
-                </div>
-                <div class="row pt-5 pb-3">
-                    <!-- Portfolio Nav Starts -->
-                    <div class="col-12">
-                        <div id="options" class=" animated" data-animation="fadeInUp" data-animation-delay="200">
-                            <ul id="filters" class="option-set clearfix" data-option-key="filter">
-                                <li><a href="#filter" data-option-value="*" class="selected">ALL</a></li>
-                                <li><a href="#filter" data-option-value=".roadandtruck">Road & Truck</a></li>
-                                <li><a href="#filter" data-option-value=".airplane">Airplane</a></li>
-                                <li><a href="#filter" data-option-value=".maritime">Maritime</a></li>
-                                <li><a href="#filter" data-option-value=".videos">Videos</a></li>
-                            </ul>
-                        </div>
-                    </div>
+<!-- PORTFOLIO STARTS -->
+<section id="portfolio" class="portfolio pb-0">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="herotext text-center animated" data-animation="fadeInUp" data-animation-delay="100">
+                    <div class="lrline pb-3"><span>{{ portfolio.section_title }}</span></div>
+                    <h2>{{ portfolio.main_title }}</h2>
+                    <h5 class="pt-2">{{ portfolio.description }}</h5>
                 </div>
             </div>
-            <div class="container-fluid">
-            <div class="row">
-                <!-- Portfolio Nav Ends -->
-                <div class="col-12">
-                    <!-- Portfolio Thumbs Starts -->
-                    <div class="make4columns portfolio-grid">
-                        <!-- Project 1 Starts -->
-                        <figure class="item airplane">
-                            <div class="picture">
-                                <img src="{% static 'website/assets/imgs/portfolio/airplane-4.jpg' %}" alt="">
-                                <!-- Picture Overlay Starts -->
-                                <div class="text-overlay">
-                                    <div class="category">Airplane</div>
-                                    <h2><a class="image-popup-vertical-fit" href="{% static 'website/assets/imgs/portfolio/airplane-4.jpg' %}" title="Product Name">Airplane</a></h2>
-                                </div>
-                                <div class="icon-overlay">
-                                    <div class="icon"><a class="image-popup-vertical-fit" href="{% static 'website/assets/imgs/portfolio/airplane-4.jpg' %}" title="Product Name"><i class="las la-expand-arrows-alt"></i></a></div>
-                                </div>
-                                <!-- Picture Overlay Ends -->
-                            </div>
-                        </figure>
-                        <!-- Project 1 Ends -->
-                        <!-- Project 3 Starts -->
-                        <figure class="item maritime">
-                            <div class="picture">
-                                <img src="{% static 'website/assets/imgs/portfolio/maritime-4.jpg' %}" alt="">
-                                <!-- Picture Overlay Starts -->
-                                <div class="text-overlay">
-                                    <div class="category">Maritime</div>
-                                    <h2><a class="image-popup-vertical-fit" href="{% static 'website/assets/imgs/portfolio/maritime-4.jpg' %}" title="Product Name">Maritime</a></h2>
-                                </div>
-                                <div class="icon-overlay">
-                                    <div class="icon"><a class="image-popup-vertical-fit" href="{% static 'website/assets/imgs/portfolio/maritime-4.jpg' %}" title="Product Name"><i class="las la-expand-arrows-alt"></i></a></div>
-                                </div>
-                                <!-- Picture Overlay Ends -->
-                            </div>
-                        </figure>
-                        <!-- Project 3 Ends -->
-                        <!-- Project 2 Starts -->
-                        <figure class="item videos">
-                            <div class="picture">
-                                <img src="{% static 'website/assets/imgs/portfolio/vid-1.jpg' %}" alt="">
-                                <!-- Picture Overlay Starts -->
-                                <div class="text-overlay">
-                                    <div class="category">video</div>
-                                    <h2><a class="popup-vimeo" href="https://vimeo.com/45830194">Product Name</a></h2>
-                                </div>
-                                <div class="icon-overlay">
-                                    <div class="icon"><a class="popup-vimeo" href="https://vimeo.com/45830194"><i class="las la-expand-arrows-alt"></i></a></div>
-                                </div>
-                                <!-- Picture Overlay Ends -->
-                            </div>
-                        </figure>
-                        <!-- Project 2 Ends -->
-                        <!-- Project 4 Starts -->
-                        <figure class="item roadandtruck">
-                            <div class="picture">
-                                <img src="{% static 'website/assets/imgs/portfolio/roadandtruck-1.jpg' %}" alt="">
-                                <!-- Picture Overlay Starts -->
-                                <div class="text-overlay">
-                                    <div class="category">Road & Truck</div>
-                                    <h2><a class="image-popup-vertical-fit" href="{% static 'website/assets/imgs/portfolio/roadandtruck-1.jpg' %}" title="Product Name">Road & Truck</a></h2>
-                                </div>
-                                <div class="icon-overlay">
-                                    <div class="icon"><a class="image-popup-vertical-fit" href="{% static 'website/assets/imgs/portfolio/roadandtruck-1.jpg' %}" title="Product Name"><i class="las la-expand-arrows-alt"></i></a></div>
-                                </div>
-                                <!-- Picture Overlay Ends -->
-                            </div>
-                        </figure>
-                        <!-- Project 4 Ends -->
-                        <!-- Project 3 Starts -->
-                        <figure class="item airplane">
-                            <div class="picture">
-                                <img src="{% static 'website/assets/imgs/portfolio/airplane-2.jpg' %}" alt="">
-                                <!-- Picture Overlay Starts -->
-                                <div class="text-overlay">
-                                    <div class="category">Airplane</div>
-                                    <h2><a class="image-popup-vertical-fit" href="{% static 'website/assets/imgs/portfolio/airplane-2.jpg' %}" title="Product Name">Airplane</a></h2>
-                                </div>
-                                <div class="icon-overlay">
-                                    <div class="icon"><a class="image-popup-vertical-fit" href="{% static 'website/assets/imgs/portfolio/airplane-2.jpg' %}" title="Product Name"><i class="las la-expand-arrows-alt"></i></a></div>
-                                </div>
-                                <!-- Picture Overlay Ends -->
-                            </div>
-                        </figure>
-                        <!-- Project 3 Ends -->
-                        <!-- Project 8 Starts -->
-                        <figure class="item roadandtruck">
-                            <div class="picture">
-                                <img src="{% static 'website/assets/imgs/portfolio/roadandtruck-3.jpg' %}" alt="">
-                                <!-- Picture Overlay Starts -->
-                                <div class="text-overlay">
-                                    <div class="category">Road & Truck</div>
-                                    <h2><a class="image-popup-vertical-fit" href="{% static 'website/assets/imgs/portfolio/roadandtruck-3.jpg' %}" title="Product Name">Road & Truck</a></h2>
-                                </div>
-                                <div class="icon-overlay">
-                                    <div class="icon"><a class="image-popup-vertical-fit" href="{% static 'website/assets/imgs/portfolio/roadandtruck-3.jpg' %}" title="Product Name"><i class="las la-expand-arrows-alt"></i></a></div>
-                                </div>
-                                <!-- Picture Overlay Ends -->
-                            </div>
-                        </figure>
-                        <!-- Project 8 Ends -->
-                        <!-- Project 3 Starts -->
-                        <figure class="item maritime">
-                            <div class="picture">
-                                <img src="{% static 'website/assets/imgs/portfolio/maritime-3.jpg' %}" alt="">
-                                <!-- Picture Overlay Starts -->
-                                <div class="text-overlay">
-                                    <div class="category">Maritime</div>
-                                    <h2><a class="image-popup-vertical-fit" href="{% static 'website/assets/imgs/portfolio/maritime-3.jpg' %}" title="Product Name">Maritime</a></h2>
-                                </div>
-                                <div class="icon-overlay">
-                                    <div class="icon"><a class="image-popup-vertical-fit" href="{% static 'website/assets/imgs/portfolio/maritime-3.jpg' %}" title="Product Name"><i class="las la-expand-arrows-alt"></i></a></div>
-                                </div>
-                                <!-- Picture Overlay Ends -->
-                            </div>
-                        </figure>
-                        <!-- Project 3 Ends -->
-                        <!-- Project 5 Starts -->
-                        <figure class="item videos">
-                            <div class="picture">
-                                <img src="{% static 'website/assets/imgs/portfolio/vid-3.jpg' %}" alt="">
-                                <!-- Picture Overlay Starts -->
-                                <div class="text-overlay">
-                                    <div class="category">video</div>
-                                    <h2><a class="popup-youtube" href="http://www.youtube.com/watch?v=0O2aH4XLbto">Video</a></h2>
-                                </div>
-                                <div class="icon-overlay">
-                                    <div class="icon"><a class="popup-youtube" href="http://www.youtube.com/watch?v=0O2aH4XLbto"><i class="las la-expand-arrows-alt"></i></a></div>
-                                </div>
-                                <!-- Picture Overlay Ends -->
-                            </div>
-                        </figure>
-                        <!-- Project 5 Ends -->
-                        <!-- Project 7 Starts -->
-                        <figure class="item roadandtruck">
-                            <div class="picture">
-                                <img src="{% static 'website/assets/imgs/portfolio/roadandtruck-2.jpg' %}" alt="">
-                                <!-- Picture Overlay Starts -->
-                                <div class="text-overlay">
-                                    <div class="category">Road & Truck</div>
-                                    <h2><a class="image-popup-vertical-fit" href="{% static 'website/assets/imgs/portfolio/roadandtruck-2.jpg' %}" title="Product Name">Road & Truck</a></h2>
-                                </div>
-                                <div class="icon-overlay">
-                                    <div class="icon"><a class="image-popup-vertical-fit" href="{% static 'website/assets/imgs/portfolio/roadandtruck-2.jpg' %}" title="Product Name"><i class="las la-expand-arrows-alt"></i></a></div>
-                                </div>
-                                <!-- Picture Overlay Ends -->
-                            </div>
-                        </figure>
-                        <!-- Project 7 Ends -->
-                        <!-- Project 6 Starts -->
-                        <figure class="item airplane">
-                            <div class="picture">
-                                <img src="{% static 'website/assets/imgs/portfolio/airplane-1.jpg' %}" alt="">
-                                <!-- Picture Overlay Starts -->
-                                <div class="text-overlay">
-                                    <div class="category">Airplane</div>
-                                    <h2><a class="image-popup-vertical-fit" href="{% static 'website/assets/imgs/portfolio/airplane-1.jpg' %}" title="Product Name">Airplane</a></h2>
-                                </div>
-                                <div class="icon-overlay">
-                                    <div class="icon"><a class="image-popup-vertical-fit" href="{% static 'website/assets/imgs/portfolio/airplane-1.jpg' %}" title="Product Name"><i class="las la-expand-arrows-alt"></i></a></div>
-                                </div>
-                                <!-- Picture Overlay Ends -->
-                            </div>
-                        </figure>
-                        <!-- Project 6 Ends -->
-                        <!-- Project 1 Starts -->
-                        <figure class="item videos">
-                            <div class="picture">
-                                <img src="{% static 'website/assets/imgs/portfolio/vid-4.jpg' %}" alt="">
-                                <!-- Picture Overlay Starts -->
-                                <div class="text-overlay">
-                                    <div class="category">video</div>
-                                    <h2><a class="popup-vimeo" href="https://vimeo.com/45830194">Video</a></h2>
-                                </div>
-                                <div class="icon-overlay">
-                                    <div class="icon"><a class="popup-vimeo" href="https://vimeo.com/45830194"><i class="las la-expand-arrows-alt"></i></a></div>
-                                </div>
-                                <!-- Picture Overlay Ends -->
-                            </div>
-                        </figure>
-                        <!-- Project 1 Ends -->
-                        <!-- Project 4 Starts -->
-                        <figure class="item roadandtruck">
-                            <div class="picture">
-                                <img src="{% static 'website/assets/imgs/portfolio/roadandtruck-4.jpg' %}" alt="">
-                                <!-- Picture Overlay Starts -->
-                                <div class="text-overlay">
-                                    <div class="category">Road & Truck</div>
-                                    <h2><a class="image-popup-vertical-fit" href="{% static 'website/assets/imgs/portfolio/roadandtruck-4.jpg' %}" title="Product Name">Road & Truck</a></h2>
-                                </div>
-                                <div class="icon-overlay">
-                                    <div class="icon"><a class="image-popup-vertical-fit" href="{% static 'website/assets/imgs/portfolio/roadandtruck-4.jpg' %}" title="Product Name"><i class="las la-expand-arrows-alt"></i></a></div>
-                                </div>
-                                <!-- Picture Overlay Ends -->
-                            </div>
-                        </figure>
-                        <!-- Project 4 Ends -->
-                        <!-- Project 2 Starts -->
-                        <figure class="item maritime">
-                            <div class="picture">
-                                <img src="{% static 'website/assets/imgs/portfolio/maritime-2.jpg' %}" alt="">
-                                <!-- Picture Overlay Starts -->
-                                <div class="text-overlay">
-                                    <div class="category">Road & Truck</div>
-                                    <h2><a class="image-popup-vertical-fit" href="{% static 'website/assets/imgs/portfolio/maritime-2.jpg' %}" title="Product Name">Maritime</a></h2>
-                                </div>
-                                <div class="icon-overlay">
-                                    <div class="icon"><a class="image-popup-vertical-fit" href="{% static 'website/assets/imgs/portfolio/maritime-2.jpg' %}" title="Product Name"><i class="las la-expand-arrows-alt"></i></a></div>
-                                </div>
-                                <!-- Picture Overlay Ends -->
-                            </div>
-                        </figure>
-                        <!-- Project 2 Ends -->
-                        <!-- Project 2 Starts -->
-                        <figure class="item videos">
-                            <div class="picture">
-                                <img src="{% static 'website/assets/imgs/portfolio/vid-2.jpg' %}" alt="">
-                                <!-- Picture Overlay Starts -->
-                                <div class="text-overlay">
-                                    <div class="category">video</div>
-                                    <h2><a class="popup-vimeo" href="https://vimeo.com/45830194">Video</a></h2>
-                                </div>
-                                <div class="icon-overlay">
-                                    <div class="icon"><a class="popup-vimeo" href="https://vimeo.com/45830194"><i class="las la-expand-arrows-alt"></i></a></div>
-                                </div>
-                                <!-- Picture Overlay Ends -->
-                            </div>
-                        </figure>
-                        <!-- Project 2 Ends -->
-                        <!-- Project 3 Starts -->
-                        <figure class="item airplane">
-                            <div class="picture">
-                                <img src="{% static 'website/assets/imgs/portfolio/airplane-3.jpg' %}" alt="">
-                                <!-- Picture Overlay Starts -->
-                                <div class="text-overlay">
-                                    <div class="category">Airplane</div>
-                                    <h2><a class="image-popup-vertical-fit" href="{% static 'website/assets/imgs/portfolio/airplane-3.jpg' %}" title="Product Name">Airplane</a></h2>
-                                </div>
-                                <div class="icon-overlay">
-                                    <div class="icon"><a class="image-popup-vertical-fit" href="{% static 'website/assets/imgs/portfolio/airplane-3.jpg' %}" title="Product Name"><i class="las la-expand-arrows-alt"></i></a></div>
-                                </div>
-                                <!-- Picture Overlay Ends -->
-                            </div>
-                        </figure>
-                        <!-- Project 3 Ends -->
-                        <!-- Project 4 Starts -->
-                        <figure class="item maritime">
-                            <div class="picture">
-                                <img src="{% static 'website/assets/imgs/portfolio/maritime-1.jpg' %}" alt="">
-                                <!-- Picture Overlay Starts -->
-                                <div class="text-overlay">
-                                    <div class="category">Maritime</div>
-                                    <h2><a class="image-popup-vertical-fit" href="{% static 'website/assets/imgs/portfolio/maritime-1.jpg' %}" title="Product Name">Maritime</a></h2>
-                                </div>
-                                <div class="icon-overlay">
-                                    <div class="icon"><a class="image-popup-vertical-fit" href="{% static 'website/assets/imgs/portfolio/maritime-1.jpg' %}" title="Product Name"><i class="las la-expand-arrows-alt"></i></a></div>
-                                </div>
-                                <!-- Picture Overlay Ends -->
-                            </div>
-                        </figure>
-                        <!-- Project 4 Ends -->
-                    </div>
+        </div>
+        
+        <!-- Filtres -->
+        <div class="row pt-5 pb-3">
+            <div class="col-12">
+                <div id="options" class="animated" data-animation="fadeInUp" data-animation-delay="200">
+                    <ul id="filters" class="option-set clearfix" data-option-key="filter">
+                        <li><a href="#filter" data-option-value="*" class="selected">ALL</a></li>
+                        {% for category in categories %}
+                        {% if category.is_active %}
+                        <li><a href="#filter" data-option-value=".{{ category.css_class }}">{{ category.name }}</a></li>
+                        {% endif %}
+                        {% endfor %}
+                    </ul>
                 </div>
             </div>
-			</div>
-        </section>
-        <!-- /. PORTFOLIO ENDS
-            ========================================================================= -->
+        </div>
+    </div>
+    
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <!-- Portfolio Items -->
+                <div class="make4columns portfolio-grid">
+                    {% for item in portfolio_items %}
+                    {% if item.is_active %}
+                    <!-- Project Starts -->
+                    <figure class="item {{ item.category.css_class }}">
+                        <div class="picture">
+                            <img src="{{ item.thumbnail.url }}" alt="{{ item.title }}">
+                            <!-- Picture Overlay Starts -->
+                            <div class="text-overlay">
+                                <div class="category">{{ item.category.name }}</div>
+                                <h2>
+                                    {% if item.is_video %}
+                                    <a class="{{ item.get_popup_class }}" href="{{ item.video_url }}">
+                                        {{ item.title }}
+                                    </a>
+                                    {% else %}
+                                    <a class="{{ item.get_popup_class }}" href="{{ item.get_media_url }}" title="{{ item.title }}">
+                                        {{ item.title }}
+                                    </a>
+                                    {% endif %}
+                                </h2>
+                            </div>
+                            <div class="icon-overlay">
+                                <div class="icon">
+                                    {% if item.is_video %}
+                                    <a class="{{ item.get_popup_class }}" href="{{ item.video_url }}">
+                                        <i class="las la-expand-arrows-alt"></i>
+                                    </a>
+                                    {% else %}
+                                    <a class="{{ item.get_popup_class }}" href="{{ item.get_media_url }}" title="{{ item.title }}">
+                                        <i class="las la-expand-arrows-alt"></i>
+                                    </a>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <!-- Picture Overlay Ends -->
+                        </div>
+                    </figure>
+                    <!-- Project Ends -->
+                    {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- /. PORTFOLIO ENDS -->

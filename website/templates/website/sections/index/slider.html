@@ -1,280 +1,196 @@
+{% comment %} website/templates/website/index.html {% endcomment %}
 {% load static %}
-        <!-- SLIDER STARTS
-            ========================================================================= -->
-        <section id="home" >
-            <div id="slider">
-                <div id="rev_slider_24_1_wrapper" class="rev_slider_wrapper fullscreen-container" data-alias="website-intro" data-source="gallery" style="background:#000000;padding:0px;">
-                    <!-- START REVOLUTION SLIDER 5.4.1 fullscreen mode -->
-                    <div id="rev_slider_24_1" class="rev_slider fullscreenbanner tiny_bullet_slider" style="display:none;" data-version="5.4.1">
-                        <ul>
-                            <!-- SLIDE  -->
-                            <li data-index="rs-67" data-transition="zoomout" data-slotamount="default" data-hideafterloop="0" data-hideslideonmobile="off"  data-easein="Power4.easeInOut" data-easeout="Power4.easeInOut" data-masterspeed="2000"  data-thumb="img/slider/fullscreen/datcolor-60x60.jpg"  data-rotate="0"  data-fstransition="fade" data-fsmasterspeed="1500" data-fsslotamount="7" data-saveperformance="off"  data-title="Intro" data-param1="" data-param2="" data-param3="" data-param4="" data-param5="" data-param6="" data-param7="" data-param8="" data-param9="" data-param10="" data-description="">
-                                <!-- MAIN IMAGE -->
-                                <img src="{% static 'website/assets/imgs/slider/1.jpg' %}"  alt=""  data-bgposition="center center" data-bgfit="cover" data-bgrepeat="no-repeat" data-bgparallax="10" class="rev-slidebg" data-no-retina>
-                                <!-- LAYERS -->
-                                <!-- LAYER NR. 1 -->
-                                <div class="tp-caption tp-shape tp-shapewrapper "
-                                    id="slide-67-layer-1"
-                                    data-x="['center','center','center','center']" data-hoffset="['0','0','0','0']"
-                                    data-y="['middle','middle','middle','middle']" data-voffset="['0','0','0','0']"
-                                    data-width="full"
-                                    data-height="full"
-                                    data-whitespace="nowrap"
-                                    data-type="shape"
-                                    data-basealign="slide"
-                                    data-responsive_offset="off"
-                                    data-responsive="off"
-                                    data-frames='[{"delay":10,"speed":500,"frame":"0","from":"opacity:0;","to":"o:1;","ease":"Power4.easeOut"},{"delay":"wait","speed":500,"frame":"999","to":"opacity:0;","ease":"Power4.easeOut"}]'
-                                    data-textAlign="['inherit','inherit','inherit','inherit']"
-                                    data-paddingtop="[0,0,0,0]"
-                                    data-paddingright="[0,0,0,0]"
-                                    data-paddingbottom="[0,0,0,0]"
-                                    data-paddingleft="[0,0,0,0]"
-                                    style="z-index: 18;background-color:rgba(0, 0, 0, 0.5);"> </div>
-                                <!-- LAYER NR. 2 -->
-                                <div class="tp-caption   tp-resizeme"
-                                    id="slide-67-layer-2"
-                                    data-x="['center','center','center','center']" data-hoffset="['1','1','0','0']"
-                                    data-y="['middle','middle','middle','middle']" data-voffset="['-70','-70','-70','-70']"
-                                    data-fontsize="['90','90','70','50']"
-                                    data-lineheight="['95','95','70','50']"
-                                    data-width="['none','none','550','360']"
-                                    data-height="none"
-                                    data-whitespace="['nowrap','nowrap','normal','normal']"
-                                    data-type="text"
-                                    data-responsive_offset="on"
-                                    data-frames='[{"delay":1000,"speed":2000,"frame":"0","from":"sX:0.9;sY:0.9;opacity:0;fb:20px;","to":"o:1;fb:0;","ease":"Power3.easeInOut"},{"delay":"wait","speed":500,"frame":"999","to":"sX:0.9;sY:0.9;opacity:0;fb:20px;","ease":"Power3.easeInOut"}]'
-                                    data-textAlign="['center','center','center','center']"
-                                    data-paddingtop="[0,0,0,0]"
-                                    data-paddingright="[0,0,0,0]"
-                                    data-paddingbottom="[0,0,0,0]"
-                                    data-paddingleft="[0,0,0,0]"
-                                    style="z-index: 19; white-space: nowrap; font-size: 95px; line-height: 90px; font-weight: 500; color: #ffffff; letter-spacing: -5px;font-family:Poppins;">Logistics is simple,<br> but not easy</div>
-                                <!-- LAYER NR. 4 -->
-                                <a class="tp-caption rev-btn tp-resizeme"
-                                    href="https://themeforest.net/item/this-one-one-page-responsive-website-template/7236268?ref=alia" target="_blank"
-                                    id="slide-67-layer-7"
-                                    data-x="['center','center','center','center']" data-hoffset="['0','0','0','0']"
-                                    data-y="['middle','middle','middle','middle']" data-voffset="['120','120','160','120']"
-                                    data-width="250"
-                                    data-height="none"
-                                    data-whitespace="nowrap"
-                                    data-type="button"
-                                    data-actions=''
-                                    data-responsive_offset="on"
-                                    data-frames='[{"delay":1000,"speed":2000,"frame":"0","from":"sX:0.9;sY:0.9;opacity:0;fb:20px;","to":"o:1;fb:0;","ease":"Power3.easeInOut"},{"delay":"wait","speed":500,"frame":"999","to":"sX:0.9;sY:0.9;opacity:0;fb:20px;","ease":"Power3.easeInOut"},{"frame":"hover","speed":"0","ease":"Linear.easeNone","to":"o:1;rX:0;rY:0;rZ:0;z:0;fb:0;","style":"c:rgba(255,255,255,1);bs:solid;bw:0 0 0 0;"}]'
-                                    data-textAlign="['center','center','center','center']"
-                                    data-paddingtop="[0,0,0,0]"
-                                    data-paddingright="[20,20,20,20]"
-                                    data-paddingbottom="[0,0,0,0]"
-                                    data-paddingleft="[20,20,20,20]"
-                                    style="z-index: 21; min-width: 250px; max-width: 250px; white-space: nowrap; font-size: 18px; line-height: 60px; font-weight: 600; color: rgba(255,255,255,1); font-family:Poppins;background-color:#D22701;border-color:rgba(0,0,0,1);border-radius:30px 30px 30px 30px;outline:none;box-shadow:none;box-sizing:border-box;-moz-box-sizing:border-box;-webkit-box-sizing:border-box;cursor:pointer;text-decoration: none;">BOOK NOW </a>
-                            </li>
-                            <!-- SLIDE  -->
-                            <li data-index="rs-66" data-transition="zoomout" data-slotamount="default" data-hideafterloop="0" data-hideslideonmobile="off"  data-easein="Power4.easeInOut" data-easeout="Power4.easeInOut" data-masterspeed="2000"  data-thumb="img/slider/fullscreen/datcolor-60x60.jpg"  data-rotate="0"  data-fstransition="fade" data-fsmasterspeed="1500" data-fsslotamount="7" data-saveperformance="off"  data-title="Intro" data-param1="" data-param2="" data-param3="" data-param4="" data-param5="" data-param6="" data-param7="" data-param8="" data-param9="" data-param10="" data-description="">
-                                <!-- MAIN IMAGE -->
-                                <img src="{% static 'website/assets/imgs/slider/2.jpg' %}"  alt=""  data-bgposition="center center" data-bgfit="cover" data-bgrepeat="no-repeat" data-bgparallax="10" class="rev-slidebg" data-no-retina>
-                                <!-- LAYERS -->
-                                <!-- LAYER NR. 1 -->
-                                <div class="tp-caption tp-shape tp-shapewrapper "
-                                    id="slide-66-layer-1"
-                                    data-x="['center','center','center','center']" data-hoffset="['0','0','0','0']"
-                                    data-y="['middle','middle','middle','middle']" data-voffset="['0','0','0','0']"
-                                    data-width="full"
-                                    data-height="full"
-                                    data-whitespace="nowrap"
-                                    data-type="shape"
-                                    data-basealign="slide"
-                                    data-responsive_offset="off"
-                                    data-responsive="off"
-                                    data-frames='[{"delay":10,"speed":500,"frame":"0","from":"opacity:0;","to":"o:1;","ease":"Power4.easeOut"},{"delay":"wait","speed":500,"frame":"999","to":"opacity:0;","ease":"Power4.easeOut"}]'
-                                    data-textAlign="['inherit','inherit','inherit','inherit']"
-                                    data-paddingtop="[0,0,0,0]"
-                                    data-paddingright="[0,0,0,0]"
-                                    data-paddingbottom="[0,0,0,0]"
-                                    data-paddingleft="[0,0,0,0]"
-                                    style="z-index: 18;background-color:rgba(0, 0, 0, 0.5);"> </div>
-                                <!-- LAYER NR. 2 -->
-                                <div class="tp-caption   tp-resizeme"
-                                    id="slide-66-layer-2"
-                                    data-x="['center','center','center','center']" data-hoffset="['1','1','0','0']"
-                                    data-y="['middle','middle','middle','middle']" data-voffset="['-70','-70','-70','-70']"
-                                    data-fontsize="['90','90','70','50']"
-                                    data-lineheight="['95','95','70','50']"
-                                    data-width="['none','none','550','360']"
-                                    data-height="none"
-                                    data-whitespace="['nowrap','nowrap','normal','normal']"
-                                    data-type="text"
-                                    data-responsive_offset="on"
-                                    data-frames='[{"delay":1000,"speed":2000,"frame":"0","from":"sX:0.9;sY:0.9;opacity:0;fb:20px;","to":"o:1;fb:0;","ease":"Power3.easeInOut"},{"delay":"wait","speed":500,"frame":"999","to":"sX:0.9;sY:0.9;opacity:0;fb:20px;","ease":"Power3.easeInOut"}]'
-                                    data-textAlign="['center','center','center','center']"
-                                    data-paddingtop="[0,0,0,0]"
-                                    data-paddingright="[0,0,0,0]"
-                                    data-paddingbottom="[0,0,0,0]"
-                                    data-paddingleft="[0,0,0,0]"
-                                    style="z-index: 19; white-space: nowrap; font-size: 95px; line-height: 90px; font-weight: 600; color: #ffffff; letter-spacing: -5px;font-family:Poppins;">Amateurs talk strategy. <br> Professionals talk logistics.</div>
-                                <!-- LAYER NR. 4 -->
-                                <a class="tp-caption rev-btn  tp-resizeme"
-                                    href="https://themeforest.net/item/this-one-one-page-responsive-website-template/7236268?ref=alia" target="_blank"			 id="slide-66-layer-7"
-                                    data-x="['center','center','center','center']" data-hoffset="['0','0','0','0']"
-                                    data-y="['middle','middle','middle','middle']" data-voffset="['120','120','160','120']"
-                                    data-width="250"
-                                    data-height="none"
-                                    data-whitespace="nowrap"
-                                    data-type="button"
-                                    data-actions=''
-                                    data-responsive_offset="on"
-                                    data-frames='[{"delay":1000,"speed":2000,"frame":"0","from":"sX:0.9;sY:0.9;opacity:0;fb:20px;","to":"o:1;fb:0;","ease":"Power3.easeInOut"},{"delay":"wait","speed":500,"frame":"999","to":"sX:0.9;sY:0.9;opacity:0;fb:20px;","ease":"Power3.easeInOut"},{"frame":"hover","speed":"0","ease":"Linear.easeNone","to":"o:1;rX:0;rY:0;rZ:0;z:0;fb:0;","style":"c:rgba(255,255,255,1);bs:solid;bw:0 0 0 0;"}]'
-                                    data-textAlign="['center','center','center','center']"
-                                    data-paddingtop="[0,0,0,0]"
-                                    data-paddingright="[20,20,20,20]"
-                                    data-paddingbottom="[0,0,0,0]"
-                                    data-paddingleft="[20,20,20,20]"
-                                    style="z-index: 21; min-width: 250px; max-width: 250px; white-space: nowrap; font-size: 18px; line-height: 60px; font-weight: 600; color: rgba(255,255,255,1); font-family:Poppins;background-color:#D22701;border-color:rgba(0,0,0,1);border-radius:30px 30px 30px 30px;outline:none;box-shadow:none;box-sizing:border-box;-moz-box-sizing:border-box;-webkit-box-sizing:border-box;cursor:pointer;text-decoration: none;">BOOK NOW </a>
-                            </li>
-                            <!-- SLIDE  -->
-                            <li data-index="rs-68" data-transition="zoomout" data-slotamount="default" data-hideafterloop="0" data-hideslideonmobile="off"  data-easein="Power4.easeInOut" data-easeout="Power4.easeInOut" data-masterspeed="2000"  data-thumb="img/slider/fullscreen/datcolor-60x60.jpg"  data-rotate="0"  data-fstransition="fade" data-fsmasterspeed="1500" data-fsslotamount="7" data-saveperformance="off"  data-title="Intro" data-param1="" data-param2="" data-param3="" data-param4="" data-param5="" data-param6="" data-param7="" data-param8="" data-param9="" data-param10="" data-description="">
-                                <!-- MAIN IMAGE -->
-                                <img src="{% static 'website/assets/imgs/slider/3.jpg' %}"  alt=""  data-bgposition="center center" data-bgfit="cover" data-bgrepeat="no-repeat" data-bgparallax="10" class="rev-slidebg" data-no-retina>
-                                <!-- LAYERS -->
-                                <!-- LAYER NR. 1 -->
-                                <div class="tp-caption tp-shape tp-shapewrapper "
-                                    id="slide-68-layer-1"
-                                    data-x="['center','center','center','center']" data-hoffset="['0','0','0','0']"
-                                    data-y="['middle','middle','middle','middle']" data-voffset="['0','0','0','0']"
-                                    data-width="full"
-                                    data-height="full"
-                                    data-whitespace="nowrap"
-                                    data-type="shape"
-                                    data-basealign="slide"
-                                    data-responsive_offset="off"
-                                    data-responsive="off"
-                                    data-frames='[{"delay":10,"speed":500,"frame":"0","from":"opacity:0;","to":"o:1;","ease":"Power4.easeOut"},{"delay":"wait","speed":500,"frame":"999","to":"opacity:0;","ease":"Power4.easeOut"}]'
-                                    data-textAlign="['inherit','inherit','inherit','inherit']"
-                                    data-paddingtop="[0,0,0,0]"
-                                    data-paddingright="[0,0,0,0]"
-                                    data-paddingbottom="[0,0,0,0]"
-                                    data-paddingleft="[0,0,0,0]"
-                                    style="z-index: 18;background-color:rgba(0, 0, 0, 0.5);"> </div>
-                                <!-- BACKGROUND VIDEO LAYER -->
-                                <div class="rs-background-video-layer"
-                                    data-forcerewind="on"
-                                    data-volume="mute"
-                                    data-videowidth="100%"
-                                    data-videoheight="100%"
-                                    data-videomp4="assets/imgs/slider/fit_edit.mp4"
-                                    data-videopreload="auto"
-                                    data-videoloop="loopandnoslidestop"
-                                    data-forceCover="1"
-                                    data-aspectratio="16:9"
-                                    data-autoplay="true"
-                                    data-autoplayonlyfirsttime="false" ></div>
-                                <!-- LAYER NR. 2 -->
-                                <div class="tp-caption   tp-resizeme"
-                                    id="slide-68-layer-2"
-                                    data-x="['center','center','center','center']" data-hoffset="['1','1','0','0']"
-                                    data-y="['middle','middle','middle','middle']" data-voffset="['-70','-70','-70','-70']"
-                                    data-fontsize="['90','90','70','50']"
-                                    data-lineheight="['95','95','70','50']"
-                                    data-width="['none','none','550','360']"
-                                    data-height="none"
-                                    data-whitespace="['nowrap','nowrap','normal','normal']"
-                                    data-type="text"
-                                    data-responsive_offset="on"
-                                    data-frames='[{"delay":1000,"speed":2000,"frame":"0","from":"sX:0.9;sY:0.9;opacity:0;fb:20px;","to":"o:1;fb:0;","ease":"Power3.easeInOut"},{"delay":"wait","speed":500,"frame":"999","to":"sX:0.9;sY:0.9;opacity:0;fb:20px;","ease":"Power3.easeInOut"}]'
-                                    data-textAlign="['center','center','center','center']"
-                                    data-paddingtop="[0,0,0,0]"
-                                    data-paddingright="[0,0,0,0]"
-                                    data-paddingbottom="[0,0,0,0]"
-                                    data-paddingleft="[0,0,0,0]"
-                                    style="z-index: 19; white-space: nowrap; font-size: 95px; line-height: 90px; font-weight: 600; color: #ffffff; letter-spacing: -5px;font-family:Poppins;">Time is money in<br> the shipping business</div>
-                                <!-- LAYER NR. 4 -->
-                                <a class="tp-caption rev-btn  tp-resizeme"
-                                    href="https://themeforest.net/item/this-one-one-page-responsive-website-template/7236268?ref=alia&license=regular&open_purchase_for_item_id=7236268&purchasable=source" target="_blank"			 id="slide-68-layer-7"
-                                    data-x="['center','center','center','center']" data-hoffset="['0','0','0','0']"
-                                    data-y="['middle','middle','middle','middle']" data-voffset="['120','120','160','120']"
-                                    data-width="250"
-                                    data-height="none"
-                                    data-whitespace="nowrap"
-                                    data-type="button"
-                                    data-actions=''
-                                    data-responsive_offset="on"
-                                    data-frames='[{"delay":1000,"speed":2000,"frame":"0","from":"sX:0.9;sY:0.9;opacity:0;fb:20px;","to":"o:1;fb:0;","ease":"Power3.easeInOut"},{"delay":"wait","speed":500,"frame":"999","to":"sX:0.9;sY:0.9;opacity:0;fb:20px;","ease":"Power3.easeInOut"},{"frame":"hover","speed":"0","ease":"Linear.easeNone","to":"o:1;rX:0;rY:0;rZ:0;z:0;fb:0;","style":"c:rgba(255,255,255,1);bs:solid;bw:0 0 0 0;"}]'
-                                    data-textAlign="['center','center','center','center']"
-                                    data-paddingtop="[0,0,0,0]"
-                                    data-paddingright="[20,20,20,20]"
-                                    data-paddingbottom="[0,0,0,0]"
-                                    data-paddingleft="[20,20,20,20]"
-                                    style="z-index: 21; min-width: 250px; max-width: 250px; white-space: nowrap; font-size: 18px; line-height: 60px; font-weight: 600; color: rgba(255,255,255,1); font-family:Poppins;background-color:#D22701;border-color:rgba(0,0,0,1);border-radius:30px 30px 30px 30px;outline:none;box-shadow:none;box-sizing:border-box;-moz-box-sizing:border-box;-webkit-box-sizing:border-box;cursor:pointer;text-decoration: none;">BOOK NOW </a>
-                            </li>
-                            <!-- SLIDE  -->
-                            <li data-index="rs-69" data-transition="zoomout" data-slotamount="default" data-hideafterloop="0" data-hideslideonmobile="off"  data-easein="Power4.easeInOut" data-easeout="Power4.easeInOut" data-masterspeed="2000"  data-thumb="img/slider/fullscreen/datcolor-60x60.jpg"  data-rotate="0"  data-fstransition="fade" data-fsmasterspeed="1500" data-fsslotamount="7" data-saveperformance="off"  data-title="Intro" data-param1="" data-param2="" data-param3="" data-param4="" data-param5="" data-param6="" data-param7="" data-param8="" data-param9="" data-param10="" data-description="">
-                                <!-- MAIN IMAGE -->
-                                <img src="{% static 'website/assets/imgs/slider/2.jpg' %}"  alt=""  data-bgposition="center center" data-bgfit="cover" data-bgrepeat="no-repeat" data-bgparallax="10" class="rev-slidebg" data-no-retina>
-                                <!-- LAYERS -->
-                                <!-- LAYER NR. 1 -->
-                                <div class="tp-caption tp-shape tp-shapewrapper "
-                                    id="slide-66-layer-1"
-                                    data-x="['center','center','center','center']" data-hoffset="['0','0','0','0']"
-                                    data-y="['middle','middle','middle','middle']" data-voffset="['0','0','0','0']"
-                                    data-width="full"
-                                    data-height="full"
-                                    data-whitespace="nowrap"
-                                    data-type="shape"
-                                    data-basealign="slide"
-                                    data-responsive_offset="off"
-                                    data-responsive="off"
-                                    data-frames='[{"delay":10,"speed":500,"frame":"0","from":"opacity:0;","to":"o:1;","ease":"Power4.easeOut"},{"delay":"wait","speed":500,"frame":"999","to":"opacity:0;","ease":"Power4.easeOut"}]'
-                                    data-textAlign="['inherit','inherit','inherit','inherit']"
-                                    data-paddingtop="[0,0,0,0]"
-                                    data-paddingright="[0,0,0,0]"
-                                    data-paddingbottom="[0,0,0,0]"
-                                    data-paddingleft="[0,0,0,0]"
-                                    style="z-index: 18;background-color:rgba(0, 0, 0, 0.5);"> </div>
-                                <!-- LAYER NR. 2 -->
-                                <div class="tp-caption   tp-resizeme"
-                                    id="slide-66-layer-2"
-                                    data-x="['center','center','center','center']" data-hoffset="['1','1','0','0']"
-                                    data-y="['middle','middle','middle','middle']" data-voffset="['-70','-70','-70','-70']"
-                                    data-fontsize="['90','90','70','50']"
-                                    data-lineheight="['95','95','70','50']"
-                                    data-width="['none','none','550','360']"
-                                    data-height="none"
-                                    data-whitespace="['nowrap','nowrap','normal','normal']"
-                                    data-type="text"
-                                    data-responsive_offset="on"
-                                    data-frames='[{"delay":1000,"speed":2000,"frame":"0","from":"sX:0.9;sY:0.9;opacity:0;fb:20px;","to":"o:1;fb:0;","ease":"Power3.easeInOut"},{"delay":"wait","speed":500,"frame":"999","to":"sX:0.9;sY:0.9;opacity:0;fb:20px;","ease":"Power3.easeInOut"}]'
-                                    data-textAlign="['center','center','center','center']"
-                                    data-paddingtop="[0,0,0,0]"
-                                    data-paddingright="[0,0,0,0]"
-                                    data-paddingbottom="[0,0,0,0]"
-                                    data-paddingleft="[0,0,0,0]"
-                                    style="z-index: 19; white-space: nowrap; font-size: 95px; line-height: 90px; font-weight: 600; color: #ffffff; letter-spacing: -5px;font-family:Poppins;">Amateurs talk strategy. <br> Professionals talk logistics.</div>
-                                <!-- LAYER NR. 4 -->
-                                <a class="tp-caption rev-btn  tp-resizeme"
-                                    href="https://themeforest.net/item/this-one-one-page-responsive-website-template/7236268?ref=alia" target="_blank"			 id="slide-66-layer-7"
-                                    data-x="['center','center','center','center']" data-hoffset="['0','0','0','0']"
-                                    data-y="['middle','middle','middle','middle']" data-voffset="['120','120','160','120']"
-                                    data-width="250"
-                                    data-height="none"
-                                    data-whitespace="nowrap"
-                                    data-type="button"
-                                    data-actions=''
-                                    data-responsive_offset="on"
-                                    data-frames='[{"delay":1000,"speed":2000,"frame":"0","from":"sX:0.9;sY:0.9;opacity:0;fb:20px;","to":"o:1;fb:0;","ease":"Power3.easeInOut"},{"delay":"wait","speed":500,"frame":"999","to":"sX:0.9;sY:0.9;opacity:0;fb:20px;","ease":"Power3.easeInOut"},{"frame":"hover","speed":"0","ease":"Linear.easeNone","to":"o:1;rX:0;rY:0;rZ:0;z:0;fb:0;","style":"c:rgba(255,255,255,1);bs:solid;bw:0 0 0 0;"}]'
-                                    data-textAlign="['center','center','center','center']"
-                                    data-paddingtop="[0,0,0,0]"
-                                    data-paddingright="[20,20,20,20]"
-                                    data-paddingbottom="[0,0,0,0]"
-                                    data-paddingleft="[20,20,20,20]"
-                                    style="z-index: 21; min-width: 250px; max-width: 250px; white-space: nowrap; font-size: 18px; line-height: 60px; font-weight: 600; color: rgba(255,255,255,1); font-family:Poppins;background-color:#D22701;border-color:rgba(0,0,0,1);border-radius:30px 30px 30px 30px;outline:none;box-shadow:none;box-sizing:border-box;-moz-box-sizing:border-box;-webkit-box-sizing:border-box;cursor:pointer;text-decoration: none;">BOOK NOW </a>
-                            </li>
-                        </ul>
-                        <div class="tp-bannertimer tp-bottom" style="height: 5px; background: #D22701;"></div>
-                    </div>
+
+<!-- SLIDER STARTS ========================================================================= -->
+<section id="home">
+    <div id="slider">
+        <div id="rev_slider_24_1_wrapper" class="rev_slider_wrapper fullscreen-container" 
+             data-alias="website-intro" data-source="gallery" 
+             style="background:#000000;padding:0px;">
+            
+            <!-- START REVOLUTION SLIDER -->
+            <div id="rev_slider_24_1" class="rev_slider fullscreenbanner tiny_bullet_slider" 
+                 style="display:none;" data-version="5.4.1">
+                
+                <ul>
+                    {% for slide in slides %}
+                    <li data-index="rs-{{ forloop.counter }}" 
+                        data-transition="{{ slide.transition }}" 
+                        data-slotamount="default" 
+                        data-hideafterloop="0" 
+                        data-hideslideonmobile="off"  
+                        data-easein="Power4.easeInOut" 
+                        data-easeout="Power4.easeInOut" 
+                        data-masterspeed="{{ slider_settings.animation_speed }}"  
+                        data-thumb="{% if slide.thumbnail %}{{ slide.thumbnail.url }}{% endif %}"  
+                        data-rotate="0"  
+                        data-fstransition="fade" 
+                        data-fsmasterspeed="1500" 
+                        data-fsslotamount="7" 
+                        data-saveperformance="off"  
+                        data-title="{{ slide.title }}" 
+                        data-param1="" data-param2="" data-param3="" 
+                        data-param4="" data-param5="" data-param6="" 
+                        data-param7="" data-param8="" data-param9="" 
+                        data-param10="" 
+                        data-description="{{ slide.description|safe }}">
+                        
+                        <!-- MAIN IMAGE -->
+                        <img src="{{ slide.image.url }}"  alt="{{ slide.title }}"  
+                             data-bgposition="center center" 
+                             data-bgfit="cover" 
+                             data-bgrepeat="no-repeat" 
+                             data-bgparallax="10" 
+                             class="rev-slidebg" 
+                             data-no-retina>
+                        
+                        <!-- LAYER NR. 1: Overlay noir -->
+                        <div class="tp-caption tp-shape tp-shapewrapper "
+                             id="slide-{{ forloop.counter }}-layer-1"
+                             data-x="['center','center','center','center']" 
+                             data-hoffset="['0','0','0','0']"
+                             data-y="['middle','middle','middle','middle']" 
+                             data-voffset="['0','0','0','0']"
+                             data-width="full"
+                             data-height="full"
+                             data-whitespace="nowrap"
+                             data-type="shape"
+                             data-basealign="slide"
+                             data-responsive_offset="off"
+                             data-responsive="off"
+                             data-frames='[{"delay":10,"speed":500,"frame":"0","from":"opacity:0;","to":"o:1;","ease":"Power4.easeOut"},{"delay":"wait","speed":500,"frame":"999","to":"opacity:0;","ease":"Power4.easeOut"}]'
+                             data-textAlign="['inherit','inherit','inherit','inherit']"
+                             data-paddingtop="[0,0,0,0]"
+                             data-paddingright="[0,0,0,0]"
+                             data-paddingbottom="[0,0,0,0]"
+                             data-paddingleft="[0,0,0,0]"
+                             style="z-index: 18;background-color:rgba(0, 0, 0, {{ slider_settings.overlay_opacity }});"> 
+                        </div>
+                        
+                        <!-- BACKGROUND VIDEO LAYER (optionnel) -->
+                        {% if slide.video %}
+                        <div class="rs-background-video-layer"
+                             data-forcerewind="on"
+                             data-volume="mute"
+                             data-videowidth="100%"
+                             data-videoheight="100%"
+                             data-videomp4="{{ slide.video.url }}"
+                             data-videopreload="auto"
+                             data-videoloop="loopandnoslidestop"
+                             data-forceCover="1"
+                             data-aspectratio="16:9"
+                             data-autoplay="true"
+                             data-autoplayonlyfirsttime="false">
+                        </div>
+                        {% endif %}
+                        
+                        <!-- LAYER NR. 2: Titre -->
+                        <div class="tp-caption tp-resizeme"
+                             id="slide-{{ forloop.counter }}-layer-2"
+                             data-x="['center','center','center','center']" 
+                             data-hoffset="['1','1','0','0']"
+                             data-y="['middle','middle','middle','middle']" 
+                             data-voffset="['-70','-70','-70','-70']"
+                             data-fontsize="['90','90','70','50']"
+                             data-lineheight="['95','95','70','50']"
+                             data-width="['none','none','550','360']"
+                             data-height="none"
+                             data-whitespace="['nowrap','nowrap','normal','normal']"
+                             data-type="text"
+                             data-responsive_offset="on"
+                             data-frames='[{"delay":1000,"speed":2000,"frame":"0","from":"sX:0.9;sY:0.9;opacity:0;fb:20px;","to":"o:1;fb:0;","ease":"Power3.easeInOut"},{"delay":"wait","speed":500,"frame":"999","to":"sX:0.9;sY:0.9;opacity:0;fb:20px;","ease":"Power3.easeInOut"}]'
+                             data-textAlign="['center','center','center','center']"
+                             data-paddingtop="[0,0,0,0]"
+                             data-paddingright="[0,0,0,0]"
+                             data-paddingbottom="[0,0,0,0]"
+                             data-paddingleft="[0,0,0,0]"
+                             style="z-index: 19; white-space: nowrap; font-size: 95px; line-height: 90px; font-weight: 500; color: #ffffff; letter-spacing: -5px;font-family:Poppins;">
+                            {{ slide.title|linebreaksbr }}
+                            {% if slide.subtitle %}
+                            <br><span style="font-size: 60%;">{{ slide.subtitle }}</span>
+                            {% endif %}
+                        </div>
+                        
+                        <!-- LAYER NR. 4: Bouton principal -->
+                        {% if slide.button_text and slide.button_link %}
+                        <a class="tp-caption rev-btn tp-resizeme"
+                           href="{{ slide.button_link }}"
+                           target="_blank"
+                           id="slide-{{ forloop.counter }}-layer-7"
+                           data-x="['center','center','center','center']" 
+                           data-hoffset="['0','0','0','0']"
+                           data-y="['middle','middle','middle','middle']" 
+                           data-voffset="['120','120','160','120']"
+                           data-width="250"
+                           data-height="none"
+                           data-whitespace="nowrap"
+                           data-type="button"
+                           data-actions=''
+                           data-responsive_offset="on"
+                           data-frames='[{"delay":1000,"speed":2000,"frame":"0","from":"sX:0.9;sY:0.9;opacity:0;fb:20px;","to":"o:1;fb:0;","ease":"Power3.easeInOut"},{"delay":"wait","speed":500,"frame":"999","to":"sX:0.9;sY:0.9;opacity:0;fb:20px;","ease":"Power3.easeInOut"},{"frame":"hover","speed":"0","ease":"Linear.easeNone","to":"o:1;rX:0;rY:0;rZ:0;z:0;fb:0;","style":"c:rgba(255,255,255,1);bs:solid;bw:0 0 0 0;"}]'
+                           data-textAlign="['center','center','center','center']"
+                           data-paddingtop="[0,0,0,0]"
+                           data-paddingright="[20,20,20,20]"
+                           data-paddingbottom="[0,0,0,0]"
+                           data-paddingleft="[20,20,20,20]"
+                           style="z-index: 21; min-width: 250px; max-width: 250px; white-space: nowrap; font-size: 18px; line-height: 60px; font-weight: 600; color: rgba(255,255,255,1); font-family:Poppins;background-color:#D22701;border-color:rgba(0,0,0,1);border-radius:30px 30px 30px 30px;outline:none;box-shadow:none;box-sizing:border-box;-moz-box-sizing:border-box;-webkit-box-sizing:border-box;cursor:pointer;text-decoration: none;">
+                           {{ slide.button_text }}
+                        </a>
+                        {% endif %}
+                        
+                        <!-- Boutons CTA supplémentaires -->
+                        {% for cta in slide.ctas.all %}
+                        {% if cta.is_active %}
+                        <a class="tp-caption rev-btn tp-resizeme"
+                           href="{{ cta.link }}"
+                           target="_blank"
+                           id="slide-{{ forloop.parentloop.counter }}-cta-{{ forloop.counter }}"
+                           data-x="['center','center','center','center']" 
+                           data-hoffset="['0','0','0','0']"
+                           data-y="['middle','middle','middle','middle']" 
+                           data-voffset="['{{ cta.vertical_offset }}','{{ cta.vertical_offset }}','{{ cta.vertical_offset|add:'40' }}','{{ cta.vertical_offset }}']"
+                           data-width="250"
+                           data-height="none"
+                           data-whitespace="nowrap"
+                           data-type="button"
+                           data-actions=''
+                           data-responsive_offset="on"
+                           data-frames='[{"delay":1000,"speed":2000,"frame":"0","from":"sX:0.9;sY:0.9;opacity:0;fb:20px;","to":"o:1;fb:0;","ease":"Power3.easeInOut"},{"delay":"wait","speed":500,"frame":"999","to":"sX:0.9;sY:0.9;opacity:0;fb:20px;","ease":"Power3.easeInOut"},{"frame":"hover","speed":"0","ease":"Linear.easeNone","to":"o:1;rX:0;rY:0;rZ:0;z:0;fb:0;","style":"c:rgba(255,255,255,1);bs:solid;bw:0 0 0 0;"}]'
+                           data-textAlign="['center','center','center','center']"
+                           data-paddingtop="[0,0,0,0]"
+                           data-paddingright="[20,20,20,20]"
+                           data-paddingbottom="[0,0,0,0]"
+                           data-paddingleft="[20,20,20,20]"
+                           style="z-index: 22; min-width: 250px; max-width: 250px; white-space: nowrap; font-size: 16px; line-height: 50px; font-weight: 600; color: rgba(255,255,255,1); font-family:Poppins;background-color:{{ cta.button_color }};border-color:rgba(0,0,0,1);border-radius:25px 25px 25px 25px;outline:none;box-shadow:none;box-sizing:border-box;-moz-box-sizing:border-box;-webkit-box-sizing:border-box;cursor:pointer;text-decoration: none;">
+                           {{ cta.text }}
+                        </a>
+                        {% endif %}
+                        {% endfor %}
+                        
+                    </li>
+                    {% empty %}
+                    <!-- Slide par défaut si aucun slide n'est configuré -->
+                    <li data-index="rs-1" data-transition="zoomout">
+                        <img src="{% static 'website/assets/imgs/slider/1.jpg' %}"  
+                             alt="Slide par défaut"
+                             data-bgposition="center center" 
+                             data-bgfit="cover">
+                        <div class="tp-caption"
+                             style="z-index: 19; color: white; font-size: 50px;">
+                            Ajoute des slides depuis l'admin
+                        </div>
+                    </li>
+                    {% endfor %}
+                </ul>
+                
+                {% if slider_settings.show_timer %}
+                <div class="tp-bannertimer tp-bottom" 
+                     style="height: 5px; background: {{ slider_settings.timer_color }};">
                 </div>
-                <!-- END REVOLUTION SLIDER -->
+                {% endif %}
             </div>
-        </section>
-        <!-- /.. SLIDER ENDS
-            ========================================================================= -->
+            <!-- END REVOLUTION SLIDER -->
+        </div>
+    </div>
+</section>
+<!-- /.. SLIDER ENDS ========================================================================= -->

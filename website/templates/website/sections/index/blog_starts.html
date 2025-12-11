@@ -1,90 +1,50 @@
-{%load static %}
+{% load static %}
 
-        <!-- BLOG STARTS
-            ========================================================================= -->
-        <section class="blog light-brown-bg" id="blog">
-            <div class="container">
-                <div class="row">
-                    <div class="col-12">
-                        <div class="herotext text-center  animated" data-animation="fadeInUp" data-animation-delay="100">
-                            <div class="lrline pb-3"><span>Stay Informed</span></div>
-                            <h2>Latest news & insights</h2>
-                            <h5 class="pt-2">Whatever item needs to be delivered or shipped, we're capable to do that!</h5>
-                        </div>
-                    </div>
-                </div>
-                <div class="row pt-5 g-0 g-lg-5">
-                    <div class="col-12 col-md-4">
-                        <div class="blog-post  animated" data-animation="fadeInUp" data-animation-delay="300">
-                            <div class="pic pb-4"><img src="{% static 'website/assets/imgs/blog/1.jpg' %}" class="img-fluid" alt=""></div>
-                            <h4><a href="blog.html">Inspiration</a></h4>
-                            <h2><a href="single-blog-post-right-sidebar.html">Single Blog Post with Right Sidebar</a></h2>
-                            <p>Cepteur sint occaecat cupidatat proident, taken possession of my entire soul, like these sweet mornings ...</p>
-                            <ul class="meta">
-                                <li>
-                                    <a href=""><i class="las la-user-alt"></i> John</a>
-                                </li>
-                                <li>
-                                    <a href=""><i class="las la-calendar"></i> 10 Jan, 2020</a>
-                                </li>
-                                <li>
-                                    <a href=""><i class="lar la-comment"></i> 3</a>
-                                </li>
-                                <li>
-                                    <a href=""><i class="lar la-eye"></i> 5.5K</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="col-12 col-md-4">
-                        <div class="blog-post  animated" data-animation="fadeInUp" data-animation-delay="500">
-                            <div class="pic pb-4"><img src="{% static 'website/assets/imgs/blog/2.jpg' %}" class="img-fluid" alt=""></div>
-                            <h4><a href="blog.html">Inspiration</a></h4>
-                            <h2><a href="single-blog-post-left-sidebar.html">Single Blog Post with Left Sidebar</a></h2>
-                            <p>Possession of my entire soul, like these sweet mornings of spring, taken possession of my entire soul ...</p>
-                            <ul class="meta">
-                                <li>
-                                    <a href=""><i class="las la-user-alt"></i> John</a>
-                                </li>
-                                <li>
-                                    <a href=""><i class="las la-calendar"></i> 10 Jan, 2020</a>
-                                </li>
-                                <li>
-                                    <a href=""><i class="lar la-comment"></i> 3</a>
-                                </li>
-                                <li>
-                                    <a href=""><i class="lar la-eye"></i> 5.5K</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="col-12 col-md-4">
-                        <div class="blog-post  animated" data-animation="fadeInUp" data-animation-delay="700">
-                            <div class="pic pb-4"><img src="{% static 'website/assets/imgs/blog/3.jpg' %}" class="img-fluid" alt=""></div>
-                            <h4><a href="blog.html">Inspiration</a></h4>
-                            <h2><a href="single-blog-post-without-sidebar.html">Single Blog Post without Sidebar</a></h2>
-                            <p>Taken possession of my entire soul, like these sweet mornings of springCepteur sint occaecat cuatat ...</p>
-                            <ul class="meta">
-                                <li>
-                                    <a href=""><i class="las la-user-alt"></i> John</a>
-                                </li>
-                                <li>
-                                    <a href=""><i class="las la-calendar"></i> 10 Jan, 2020</a>
-                                </li>
-                                <li>
-                                    <a href=""><i class="lar la-comment"></i> 3</a>
-                                </li>
-                                <li>
-                                    <a href=""><i class="lar la-eye"></i> 5.5K</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-                <div class="row pt-3 pt-lg-5">
-                    <div class="col-12 text-center  animated" data-animation="fadeInUp" data-animation-delay="900"><a href="blog.html" class="btn btn-primary">VIEW ALL POSTS</a></div>
+<!-- BLOG STARTS -->
+<section class="blog light-brown-bg" id="blog">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="herotext text-center animated" data-animation="fadeInUp" data-animation-delay="100">
+                    <div class="lrline pb-3"><span>Restez informé</span></div>
+                    <h2>Dernières nouvelles & inspirations</h2>
+                    <h5 class="pt-2">Découvrez nos dernières créations et tendances bijoux</h5>
                 </div>
             </div>
-        </section>
-        <!-- /.. BLOG ENDS
-            ========================================================================= -->
+        </div>
+        <div class="row pt-5 g-0 g-lg-5">
+            {% for post in blog_posts %}
+            <div class="col-12 col-md-4">
+                <div class="blog-post animated" data-animation="fadeInUp" data-animation-delay="{% cycle '300' '400' '100' '200' '100' '200' %}">
+                    <img src="{{ post.image.url }}" class="img-fluid" alt="{{ post.title }}">
+                    <div class="d-flex align-items-center text-muted mb-2">
+                        <h4 class="mb-0 me-3"><a href="#" class="text-reset text-decoration-none">{{ post.get_category_display }}</a></h4>
+                        <span class="text-muted">•</span>
+                        <p class="mb-0 ms-3 text-muted">{{ post.excerpt }}</p>
+                    </div>
+                    <ul class="meta">
+                        <li>
+                            <a href=""><i class="las la-user-alt"></i> {{ post.author }}</a>
+                        </li>
+                        <li>
+                            <a href=""><i class="las la-calendar"></i> {{ post.formatted_date }}</a>
+                        </li>
+                        <li>
+                            <a href=""><i class="lar la-comment"></i> {{ post.comment_count }} commentaires</a>
+                        </li>
+                        <li>
+                            <a href=""><i class="lar la-eye"></i> {{ post.view_count|floatformat:"0" }} vues</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        <div class="row pt-3 pt-lg-5">
+            <div class="col-12 text-center animated" data-animation="fadeInUp" data-animation-delay="900">
+                <a href="{% url 'website:home' %}" class="btn btn-primary">VOIR TOUS LES ARTICLES</a>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- /.. BLOG ENDS -->
