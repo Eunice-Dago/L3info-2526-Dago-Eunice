@@ -1,27 +1,30 @@
 # tp3/website/views.py
-from django.shortcuts import render
+from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib import messages
+from django.core.paginator import Paginator
+from django.db.models import Q
 from .models import *
-from django.shortcuts import redirect
 
 def index(request):
     about_instance = About.objects.first()
     collection = Collection.objects.first()
     cta = CTA.objects.filter(is_active=True).first()
     services = Service.objects.filter(is_active=True).order_by('order')[:3]
-    testimonials = Testimonial.objects.filter(is_active=True).order_by('order')[:3]
+    testimonials = Testimonial.objects.all().order_by('order')[:3]
+    testimonial1s = Testimonial1.objects.all()[:3]
+    tests = Test.objects.all()[:3]
     slides = Slider.objects.filter(is_active=True).order_by('display_order')
-    settings = SliderSettings.get_settings()
+    settings = SiteSettings.objects.first()   
     expertise = ExpertiseSection.objects.filter(is_active=True).order_by('display_order').first()
     team_section = TeamSection.objects.filter(is_active=True).order_by('display_order').first()
     pricing_plans = PricingPlan.objects.filter(is_active=True).order_by('order')
-    blog_posts = BlogPost.objects.filter(is_published=True).order_by('-published_date')[:3]
+    
+    # CORRECTION : Utilisez 'published' au lieu de 'is_published' et 'created_at' au lieu de 'published_date'
+    blog_posts = Post.objects.filter(published=True).order_by('-created_at')[:3]
     clients = Client.objects.filter(is_active=True).order_by('order')
     video_section = VideoSection.objects.filter(is_active=True).first()
     photos_galerie = PhotoGalerie.objects.all().order_by('ordre')[:9]
     portfolio = PortfolioSection.objects.filter(is_active=True).first()
-
-
- 
 
     if not portfolio:
         portfolio = PortfolioSection.objects.create(
@@ -36,16 +39,13 @@ def index(request):
     # Éléments du portfolio
     portfolio_items = PortfolioItem.objects.filter(is_active=True).order_by('display_order', '-created_at')
 
-
-
- # Si elle n'existe pas, créez-la via l'admin
+    # Si elle n'existe pas, créez-la via l'admin
     if not collection:
         collection = Collection.objects.create(
             section_title="NOS COLLECTIONS EXCLUSIVES",
             main_title="Découvrez nos gammes de bijoux raffinés",
             description="Des créations uniques pour chaque occasion, de l'élégance discrète à la pièce statement"
         )
-
 
     if not cta:
         cta = CTA.objects.create(
@@ -56,7 +56,6 @@ def index(request):
             phone_number="+33 1 23 45 67 89",
             phone_display="+33 1 23 45 67 89"
         )
-
 
     if not services.exists():
         default_services = [
@@ -80,15 +79,13 @@ def index(request):
             }
         ]
 
-
         for service_data in default_services:
             Service.objects.create(**service_data)
         
         services = Service.objects.filter(is_active=True).order_by('order')[:3]
 
-
-        if not testimonials.exists():
-         default_testimonials = [
+    if not testimonials.exists():
+        default_testimonials = [
             {
                 'name': 'Alexandra Grant',
                 'location': 'Los Angeles, USA',
@@ -104,8 +101,6 @@ def index(request):
                 'order': 2
             },
             {
-
-
                 'name': 'Marie Dubois',
                 'location': 'Paris, France',
                 'content': 'Très satisfaite du travail accompli. Une équipe réactive et compétente qui a su comprendre nos besoins.',
@@ -117,7 +112,8 @@ def index(request):
         for testimonial_data in default_testimonials:
             Testimonial.objects.create(**testimonial_data)
         
-        testimonials = Testimonial.objects.filter(is_active=True).order_by('order')[:3]
+    testimonials = Testimonial.objects.all().order_by('order')[:3]
+    testimonial1s = Testimonial1.objects.all()[:3]
 
 
     context = {
@@ -127,10 +123,12 @@ def index(request):
         'cta': cta,
         'services': services,
         'testimonials': testimonials,
+        'testimonial1s': testimonial1s,
+        'tests':tests,
         'slides': slides,
         'settings': settings,
-        'expertise': expertise,  # Ajoute la section savoir-faire
-        'team_section': team_section,  # Ajoute la section équipe
+        'expertise': expertise,
+        'team_section': team_section,
         'pricing_plans': pricing_plans,
         'blog_posts': blog_posts,
         'clients': clients,
@@ -139,21 +137,15 @@ def index(request):
         'portfolio': portfolio,
         'portfolio_items': portfolio_items,
         'categories': categories,
-
-
-
-        }
+    }
     return render(request, 'website/pages/index.html', context)
 
 def about(request):
     banners = Banner.objects.filter(page='About')
     collection = Collection.objects.first()
     cta = CTA.objects.filter(is_active=True).first()
-
-    # Récupère le premier enregistrement About (ou celui que vous voulez)
     about_instance = About.objects.first()
 
-     # Si elle n'existe pas, créez-la via l'admin
     if not collection:
         collection = Collection.objects.create(
             section_title="NOS COLLECTIONS EXCLUSIVES",
@@ -163,18 +155,16 @@ def about(request):
     
     context = {
         'banners': banners,
-        'about': about_instance,  # Maintenant c'est l'instance About
+        'about': about_instance,
         'collection': collection,
         'cta': cta,
     }
     return render(request, 'website/pages/about.html', context)
 
 def contact(request):
-    """Page de contact"""
     banners = Banner.objects.filter(page="Contact")
     contact_info = ContactInfo.objects.filter(is_active=True).first()
     
-    # Si aucune info de contact n'existe, créez-en une par défaut
     if not contact_info:
         contact_info = ContactInfo.objects.create(
             section_title="Get In Touch",
@@ -198,19 +188,16 @@ def contact(request):
     return render(request, 'website/pages/contact.html', context)
 
 def contact_submit(request):
-    """Traitement du formulaire de contact"""
     if request.method == 'POST':
         name = request.POST.get('name', '').strip()
         email = request.POST.get('email', '').strip()
         website = request.POST.get('website', '').strip()
         message_text = request.POST.get('message', '').strip()
         
-        # Validation simple
         if not name or not email or not message_text:
-          messages.error(request, "Veuillez remplir tous les champs obligatoires.")
-          return redirect('contact')
+            messages.error(request, "Veuillez remplir tous les champs obligatoires.")
+            return redirect('contact')
         
-        # Créer le message
         contact_message = ContactMessage.objects.create(
             name=name,
             email=email,
@@ -220,36 +207,28 @@ def contact_submit(request):
             user_agent=request.META.get('HTTP_USER_AGENT', '')
         )
         
-        # Optionnel : Envoyer un email de notification
-        # send_contact_notification(contact_message)
-        
         messages.success(request, "Votre message a été envoyé avec succès. Nous vous répondrons bientôt.")
         return redirect('contact')
     
     return redirect('contact')
 
 def get_client_ip(request):
-    """Récupère l'adresse IP du client"""
     x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
     if x_forwarded_for:
         ip = x_forwarded_for.split(',')[0]
     else:
         ip = request.META.get('REMOTE_ADDR')
     return ip
-    
-
 
 def our_services(request):
     banners = Banner.objects.filter(page='Service')
     collection = Collection.objects.first()
     expertise = ExpertiseSection.objects.filter(is_active=True).order_by('display_order').first()
-    testimonials = Testimonial.objects.filter(is_active=True).order_by('order')[:3]
     clients = Client.objects.filter(is_active=True).order_by('order')
-    
-    # Récupérer tous les services
+    testimonials = Testimonial.objects.all().order_by('order')[:3]
+    testimonial1s = Testimonial1.objects.all()[:3]
+    tests = Test.objects.all()[:3]
     all_services = Service.objects.filter(is_active=True).order_by('order')
-    
-    # Services pour la section principale
     services = Service.objects.filter(is_active=True).order_by('order')[:3]
 
     if not services.exists():
@@ -273,7 +252,6 @@ def our_services(request):
                 'order': 3
             }
         ]
-
 
         for service_data in default_services:
             Service.objects.create(**service_data)
@@ -285,28 +263,20 @@ def our_services(request):
         'banners': banners,
         'services': services,
         'all_services': all_services,
-        'testimonials': testimonials,
         'expertise': expertise,
         'clients': clients,
         'collection': collection,
+        'testimonials': testimonials,
+        'testimonial1s': testimonial1s,
+        'tests':tests,
     }
 
     return render(request,'website/pages/our-services.html',context)
 
-
 def services_detail(request):
-    """Render service details page."""
-    
     banners = Banner.objects.filter(page='Service_Detail')
     connect_section = ConnectSection.objects.filter(is_active=True).first()
-    
-    # Prend la première collection active
     current_collection = JewelryCollection.objects.filter(is_active=True).first()
-    
-    if not current_collection:
-        # Si aucune collection n'existe, crée-en une de test ou passe None
-        current_collection = None
-    
     all_collections = JewelryCollection.objects.filter(is_active=True).order_by('order')
     
     context = {
@@ -318,11 +288,12 @@ def services_detail(request):
     }
     return render(request, 'website/pages/services-detail.html', context)
 
-
 def gallery(request):
     banners = Banner.objects.filter(page='Gallery')
     services = Service.objects.filter(is_active=True).order_by('order')[:3]
-    testimonials = Testimonial.objects.filter(is_active=True).order_by('order')[:3]
+    testimonials = Testimonial.objects.all().order_by('order')[:3]
+    testimonial1s = Testimonial1.objects.all()[:3]
+    tests = Test.objects.all()[:3]
     portfolio = PortfolioSection.objects.filter(is_active=True).first()
     photos_galerie = PhotoGalerie.objects.all().order_by('ordre')[:9]
 
@@ -333,13 +304,8 @@ def gallery(request):
             description="Whatever item needs to be delivered or shipped, we're capable to do that!"
         )
     
-    # Catégories actives
     categories = PortfolioCategory.objects.filter(is_active=True).order_by('display_order')
-    
-    # Éléments du portfolio
     portfolio_items = PortfolioItem.objects.filter(is_active=True).order_by('display_order', '-created_at')
-
-    #gallery= Gallery.objects.all()
 
     if not services.exists():
         default_services = [
@@ -363,13 +329,10 @@ def gallery(request):
             }
         ]
 
-
         for service_data in default_services:
             Service.objects.create(**service_data)
         
         services = Service.objects.filter(is_active=True).order_by('order')[:3]
-
-
 
     context = {
         'title': 'Gallery',
@@ -378,10 +341,10 @@ def gallery(request):
         'portfolio': portfolio,
         'categories': categories,
         'testimonials': testimonials,
+        'testimonial1s': testimonial1s,
+        'tests':tests,
         'portfolio_items': portfolio_items,
         'photos_galerie': photos_galerie,
-
-
     }
     return render(request, 'website/pages/gallery.html',context)
     
@@ -391,22 +354,14 @@ def team(request):
     testimonials = Testimonial.objects.filter(is_active=True).order_by('order')[:3]
     clients = Client.objects.filter(is_active=True).order_by('order')
 
-
-
-    #team_members = TeamMember.objects.all()
     context = {
         'title': 'Our Team',
         'banners': banners,
-        #'team_members': team_members,
-        'team_section': team_section,  # Ajoute la section équipe
+        'team_section': team_section,
         'testimonials': testimonials,
         'clients': clients,
-
-
-
     }
     return render(request, 'website/pages/team.html',context)
-
 
 def pricing(request):
     banners = Banner.objects.filter(page='Pricing')
@@ -416,309 +371,134 @@ def pricing(request):
     context = {
         'title': 'Pricing',
         'banners': banners,
-        'pricing_plans': pricing_plans,  # Nom correct de la variable
+        'pricing_plans': pricing_plans,
         'testimonials': testimonials,
-
     }
     return render(request, 'website/pages/pricing.html',context)
 
-
-
-def blog(request):
-    banners = Banner.objects.filter(page='Blog')
-            # Essayer de récupérer les éléments de la sidebar
-        # Si le modèle n'existe pas, laisser à None
+# VUES BLOG CORRIGÉES
+def blog_list(request):
+    banners = Banner.objects.filter(page='About')
+    posts_list = Post.objects.filter(published=True).order_by('-created_at')
+    paginator = Paginator(posts_list, 12)
+    page_number = request.GET.get('page')
+    posts = paginator.get_page(page_number)
     
-    blog_banner = BlogBanner.objects.filter(is_active=True).first()
-    blog_posts = BlogPost.objects.filter(is_published=True).order_by('-published_date')[:3]
-    categories_sidebar = CategorieSidebar.objects.all().order_by('ordre')
-    articles_populaires = ArticleSidebar.objects.filter(type_article='populaire').order_by('ordre')[:4]
-    articles_recents = ArticleSidebar.objects.filter(type_article='recent').order_by('ordre')[:4]
-    photos_galerie = PhotoGalerie.objects.all().order_by('ordre')[:9]
+    categories = BlogCategory.objects.all()
+    sidebar_content = SidebarContent.objects.filter(is_active=True)
+    gallery_images = GalleryImage.objects.all()[:9]
     
-
-    """Render the blog listing page."""
+    # CORRECTION : Supprimez 'is_popular=True' car le champ n'existe pas
+    popular_posts = Post.objects.filter(published=True).order_by('-views')[:4]  # Utilisez views pour la popularité
+    recent_posts = Post.objects.filter(published=True).order_by('-created_at')[:4]
+    
     context = {
-
+        'posts': posts,
+        'categories': categories,
+        'sidebar_content': sidebar_content,
         'banners': banners,
-        #'blogs': blogs,
-        'title': 'Blog',
-        'blog_banner': blog_banner,
-        'blog_posts': blog_posts,
-        'articles_recents': articles_recents,
-        'categories_sidebar': categories_sidebar,
-        'articles_populaires': articles_populaires,
-        'articles_recents': articles_recents,
-        'photos_galerie': photos_galerie,
-        'blog_banner': blog_banner, 
-
-
+        'gallery_images': gallery_images,
+        'popular_posts': popular_posts,
+        'recent_posts': recent_posts,
     }
     return render(request, 'website/pages/blog.html', context)
 
-from django.shortcuts import render, get_object_or_404
-from django.core.paginator import Paginator
-from django.db.models import Q
-
-
-def blog_list(request):
-    """Liste des articles"""
-    # CORRECTION : Utiliser le bon champ de statut
-    posts_list = BlogPost.objects.filter(is_published=True).order_by('-published_date')
+def single_post(request, slug):
+    post = get_object_or_404(Post, slug=slug, published=True)
+    post.increment_views()
     
-    # Pagination
-    paginator = Paginator(posts_list, 6)
-    page_number = request.GET.get('page')
-    page_obj = paginator.get_page(page_number)
-    
-    # Données pour la sidebar
-    categories = BlogCategory.objects.all()
-    popular_posts = BlogPost.objects.filter(is_published=True).order_by('-view_count')[:4]
-    recent_posts = BlogPost.objects.filter(is_published=True).order_by('-published_date')[:4]
-    tags = Tag.objects.all()
-    
-
-    
-    # Contenu sidebar
-    sidebar_content = {}
-    try:
-        for content in SidebarContent.objects.filter(is_active=True):
-            sidebar_content[content.content_type] = content
-    except (NameError, AttributeError):
-        pass
-    
-    context = {
-        'posts': page_obj,
-        'page_obj': page_obj,
-        'is_paginated': paginator.num_pages > 1,
-        'categories': categories,
-        'popular_posts': popular_posts,
-        'recent_posts': recent_posts,
-        'tags': tags,
-        'sidebar_content': sidebar_content,
-    }
-    
-    return render(request, 'website/blog.html', context)
-
-
-def blog_detail(request, slug):
-    """Détail d'un article"""
-    post = get_object_or_404(BlogPost, slug=slug, is_published=True)
-    
-    # Incrémenter le compteur de vues
-    post.view_count += 1
-    post.save(update_fields=['view_count'])
-    
-    # Articles similaires (même catégorie)
-    related_posts = BlogPost.objects.filter(
+    similar_posts = Post.objects.filter(
         category=post.category, 
-        is_published=True
-    ).exclude(id=post.id)[:3]
+        published=True
+    ).exclude(id=post.id)[:2]
+    
+    categories = BlogCategory.objects.all()
+    sidebar_content = SidebarContent.objects.filter(is_active=True)
+    gallery_images = GalleryImage.objects.all()[:9]
+    popular_posts = Post.objects.filter(published=True).order_by('-views')[:4]  # CORRECTION
+    recent_posts = Post.objects.filter(published=True).order_by('-created_at')[:4]
     
     context = {
         'post': post,
-        'related_posts': related_posts,
+        'similar_posts': similar_posts,
+        'categories': categories,
+        'sidebar_content': sidebar_content,
+        'gallery_images': gallery_images,
+        'popular_posts': popular_posts,
+        'recent_posts': recent_posts,
     }
     
-    return render(request, 'website/blog_detail.html', context)
+    return render(request, f'website/pages/blog.html', context)
+
+def single_post_left_sidebar(request, slug):
+
+    return single_post(request, slug, 'single_left.html')
+
+def single_post_right_sidebar(request, slug):
+
+     return single_post(request, slug, 'single_right.html')
 
 
-def blog_category(request, slug):
-    """Articles par catégorie"""
+
+def single_post_no_sidebar(request, slug):
+   return single_post(request, slug, 'single_no_sidebar.html')
+
+def search_posts(request):
+    query = request.GET.get('q', '')
+    results = []
+    
+    if query:
+        results = Post.objects.filter(
+            Q(title__icontains=query) | 
+            Q(content__icontains=query) |
+            Q(excerpt__icontains=query)
+        ).filter(published=True).order_by('-created_at')
+    
+    context = {
+        'query': query,
+        'results': results,
+        'results_count': results.count(),
+    }
+    return render(request, 'website/pages/blog.html', context)
+
+def posts_by_category(request, slug):
     category = get_object_or_404(BlogCategory, slug=slug)
-    posts = BlogPost.objects.filter(category=category, status='published').order_by('-publication_date')
+    posts = Post.objects.filter(category=category, published=True).order_by('-created_at')
     
     context = {
         'category': category,
         'posts': posts,
     }
-    
-    return render(request, 'website/blog_category.html', context)
+    return render(request, 'website/pages/blog.html', context)
 
-def blog_tag(request, slug):
-    """Articles par tag"""
+def posts_by_tag(request, slug):
     tag = get_object_or_404(Tag, slug=slug)
-    posts = BlogPost.objects.filter(tags=tag, status='published').order_by('-publication_date')
+    posts = Post.objects.filter(tags=tag, published=True).order_by('-created_at')
     
     context = {
         'tag': tag,
         'posts': posts,
     }
-    
-    return render(request, 'website/blog_tag.html', context)
-
-def blog_search(request):
-    """Recherche d'articles"""
-    query = request.GET.get('q', '')
-    if query:
-        posts = BlogPost.objects.filter(
-            Q(title__icontains=query) | 
-            Q(content__icontains=query) |
-            Q(excerpt__icontains=query),
-            status='published'
-        ).order_by('-publication_date')
-    else:
-        posts = BlogPost.objects.none()
-    
-    context = {
-        'posts': posts,
-        'query': query,
-    }
-    
-    return render(request, 'website/blog_search.html', context) 
-
-
-
-
-from django.shortcuts import render, get_object_or_404
-from .models import ArticleDetail, CategorieSidebar, ArticleSidebar, PhotoGalerie
-
-def single_blog_right(request, slug=None):
-    blog_banner = BlogBanner.objects.filter(is_active=True).first()
-
-    """Page single blog avec sidebar à droite"""
-    
-    # CORRECTION : Vérifier si ArticleDetail existe
-    article = None
-    try:
-        if slug:
-            article = get_object_or_404(ArticleDetail, slug=slug, est_actif=True)
-        else:
-            article = ArticleDetail.objects.filter(est_actif=True).first()
-    except (NameError, AttributeError):
-        # Si ArticleDetail n'existe pas, essayer avec BlogPost
-        try:
-            if slug:
-                article = get_object_or_404(BlogPost, slug=slug, is_published=True)
-            else:
-                article = BlogPost.objects.filter(is_published=True).first()
-        except (NameError, AttributeError):
-            pass
-
-    categories_sidebar = CategorieSidebar.objects.all().order_by('ordre')
-    articles_populaires = ArticleSidebar.objects.filter(type_article='populaire').order_by('ordre')[:4]
-    articles_recents = ArticleSidebar.objects.filter(type_article='recent').order_by('ordre')[:4]
-    photos_galerie = PhotoGalerie.objects.all().order_by('ordre')[:9]
-    
-    context = {
-        'article': article,
-        'categories_sidebar': categories_sidebar,
-        'articles_populaires': articles_populaires,
-        'articles_recents': articles_recents,
-        'photos_galerie': photos_galerie,
-        'blog_banner': blog_banner,
-    }
-    
-    return render(request, 'website/pages/single-blog-post-right-sidebar.html', context)
-    
-
-def single_blog_left(request):
-    """Render single blog post with left sidebar."""
-    
-    # Prend le premier article publié (ou un article spécifique)
-    article = ArticleBlog.objects.filter(est_publie=True).first()
-    blog_banner = BlogBanner.objects.filter(is_active=True).first()
-
-    if not article:
-        # Si aucun article n'existe, crée un contexte vide ou un message d'erreur
-        context = {
-            'error': 'Aucun article disponible pour le moment.',
-            'categories': CategorieArticle.objects.all().order_by('ordre'),
-            'mots_cles': MotCleArticle.objects.all(),
-        }
-        return render(request, 'website/pages/single-blog-post-left-sidebar.html', context)
-    
-    # Incrémente les vues
-    article.nombre_vues += 1
-    article.save(update_fields=['nombre_vues'])
-    
-    # Données sidebar
-    categories = CategorieArticle.objects.all().order_by('ordre')
-    mots_cles = MotCleArticle.objects.all()
-    articles_populaires = ArticlePopulaire.objects.select_related('article').order_by('-clics')[:4]
-    
-    # Sections sidebar
-    section_a_propos = SidebarBlog.objects.filter(type_section='a_propos', est_actif=True).first()
-    section_galerie = SidebarBlog.objects.filter(type_section='galerie', est_actif=True).first()
-    images_galerie = ImageGalerieSidebar.objects.filter(section_sidebar=section_galerie).order_by('ordre')[:9] if section_galerie else []
-    
-    # Articles récents
-    articles_recents = ArticleBlog.objects.filter(est_publie=True).order_by('-date_publication')[:4]
-    
-    # Commentaires
-    commentaires = article.commentaires.filter(est_approuve=True, parent__isnull=True)
-    
-    context = {
-        'article': article,
-        'categories': categories,
-        'mots_cles': mots_cles,
-        'articles_populaires': articles_populaires,
-        'articles_recents': articles_recents,
-        'section_a_propos': section_a_propos,
-        'images_galerie': images_galerie,
-        'commentaires': commentaires,
-        'blog_banner': blog_banner,
-
-    }
-    
-    return render(request, 'website/pages/single-blog-post-left-sidebar.html', context)
-
-
-
-from django.shortcuts import render
-from .models import ArticleCentre
-
-def single_blog_no_sidebar(request):
-    """Page single blog sans sidebar (centré)"""
-    blog_banner = BlogBanner.objects.filter(is_active=True).first()
-
-    
-    # Prend le premier article actif
-    article = ArticleCentre.objects.filter(est_actif=True).first()
-    
-    # Si aucun article n'existe
-    if not article:
-        article = None
-    
-    # Récupère les commentaires approuvés (sans les réponses parentes)
-    commentaires = []
-    if article:
-        commentaires = article.commentaires.filter(approuve=True, parent__isnull=True)
-    
-    context = {
-        'article': article,
-        'commentaires': commentaires,
-        'blog_banner': blog_banner,
-
-
-    }
-    
-    return render(request, 'website/pages/single-blog-post-without-sidebar.html', context)
-    """Render single blog post without sidebar."""
-
+    return render(request, 'website/pages/blog.html', context)
     
 def banner(request):
     banners = Banner.objects.all()
     context = {
         'banners': banners,
-        
     }
     return render(request, 'website/pages/banner.html', context)
-
 
 def home(request):
     about_instance = About.objects.first()
     collection = Collection.objects.first()
     cta = CTA.objects.filter(is_active=True).first()
 
-     # Si elle n'existe pas, créez-la via l'admin
     if not collection:
         collection = Collection.objects.create(
             section_title="NOS COLLECTIONS EXCLUSIVES",
             main_title="Découvrez nos gammes de bijoux raffinés",
             description="Des créations uniques pour chaque occasion, de l'élégance discrète à la pièce statement"
         )
-
 
     if not cta:
         cta = CTA.objects.create(
@@ -730,7 +510,6 @@ def home(request):
             phone_display="+33 1 23 45 67 89"
         )
 
-
     context = {
         'title': 'TP WEB L3 Info',
         'about': about_instance,
@@ -738,3 +517,84 @@ def home(request):
         'cta': cta,
     }
     return render(request, 'website/pages/index.html', context)
+
+# Ajoutez à la fin de website/views.py
+
+# AJOUTEZ CES FONCTIONS À LA FIN DE website/views.py
+
+def single_blog_left(request, slug=None):
+    """Alias pour single_post_left_sidebar - pour compatibilité avec urls.py"""
+    if slug:
+        return single_post_left_sidebar(request, slug)
+    # Si pas de slug, affiche le premier article
+    first_post = Post.objects.filter(published=True).first()
+    if first_post:
+        return single_post_left_sidebar(request, first_post.slug)
+    return blog_list(request)
+
+def single_blog_right(request, slug=None):
+    """Alias pour single_post_right_sidebar - pour compatibilité avec urls.py"""
+    if slug:
+        return single_post_right_sidebar(request, slug)
+    first_post = Post.objects.filter(published=True).first()
+    if first_post:
+        return single_post_right_sidebar(request, first_post.slug)
+    return blog_list(request)
+
+def single_blog_no_sidebar(request, slug=None):
+    """Alias pour single_post_no_sidebar - pour compatibilité avec urls.py"""
+    if slug:
+        return single_post_no_sidebar(request, slug)
+    first_post = Post.objects.filter(published=True).first()
+    if first_post:
+        return single_post_no_sidebar(request, first_post.slug)
+    return blog_list(request)
+
+# Fonctions wrapper pour les URLs sans slug
+def single_post_left_sidebar_wrapper(request):
+    """Pour l'URL single-blog-post-left-sidebar.html (sans slug)"""
+    return single_blog_left(request)
+
+def single_post_right_sidebar_wrapper(request):
+    """Pour l'URL single-blog-post-right-sidebar.html (sans slug)"""
+    return single_blog_right(request)
+
+def single_post_no_sidebar_wrapper(request):
+    """Pour l'URL single-blog-post-without-sidebar.html (sans slug)"""
+    return single_blog_no_sidebar(request)
+
+def single_blog_left(request):
+    blog_banners=BlogBanner.objects.filter(page='single_blog_left')
+    context = {
+
+         'blog_banners': blog_banners,
+ }
+
+    return render(request, 'website/single-blog-post-left-sidebar.html')
+
+
+def single_blog_right(request):
+
+
+    blog_banners=BlogBanner.objects.filter(page='single_blog_right')
+
+    context = {
+
+         'blog_banners': blog_banners,
+        }
+
+    return render(request,  'website/single-blog-post-right-sidebar.html')
+
+
+def single_blog_no_sidebar(request):
+
+    blog_banners=BlogBanner.objects.filter(page='single_blog_no_sidebar')
+    context = {
+
+         'blog_banners': blog_banners,
+        }
+
+
+    return render(request,  'website/single-blog-post-without-sidebar.html')
+
+

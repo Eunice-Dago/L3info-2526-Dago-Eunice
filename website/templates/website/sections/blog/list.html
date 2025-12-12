@@ -1,190 +1,385 @@
-{% load static %}
-
 <section class="blog blog-inner-page">
-    <div class="container">
-        <div class="row">
-            <!-- Left Column Starts-->
-            <div class="col-12 col-lg-9 pe-3 pe-lg-5">
-                <div class="row g-0 g-lg-5">
-                    {% for post in posts %}
-                    <!-- Blog Post Starts-->
-                    <div class="col-12 col-md-6">
-                        <div class="blog-post pb-md-2 animated" data-animation="fadeInUp"      data-animation-delay="{% cycle '300' '400' '100' '200' '100' '200' %}">
-                                <img src="{{ post.featured_image.url }}" class="img-fluid" alt="{{ post.title }}">
-                            </div>
-                            <h4><a href="{% url 'blog_category' post.category.slug %}">/{{ post.category.name|upper }}</a></h4>
-                            <h2><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></h2>
-                            <p>{{ post.excerpt|truncatewords:30 }}</p>
-                            <ul class="meta">
-                                <li>
-                                    <a href="#"><i class="las la-user-alt"></i> {{ post.author.username }}</a>
-                                </li>
-                                <li>
-                                    <a href="#"><i class="las la-calendar"></i> {{ post.publication_date|date:"d M, Y" }}</a>
-                                </li>
-                                <li>
-                                    <a href="#"><i class="lar la-comment"></i> {{ post.comment_count }}</a>
-                                </li>
-                                <li>
-                                    <a href="#"><i class="lar la-eye"></i> {{ post.view_count }}</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                    <!-- Blog Post Ends-->
-                    {% endfor %}
-                </div>
-                
-                <!-- Pagination -->
-                {% if is_paginated %}
+            <div class="container">
                 <div class="row">
-                    <div class="col-12">
-                        <ul class="pagination pt-0 pt-md-4 pt-lg-5 animated" data-animation="fadeInUp" data-animation-delay="100">
-                            {% if page_obj.has_previous %}
-                            <li class="page-item">
-                                <a class="page-link" href="?page={{ page_obj.previous_page_number }}" aria-label="Previous">
-                                    <span aria-hidden="true"><i class="las la-angle-left"></i></span>
-                                </a>
-                            </li>
-                            {% endif %}
-                            
-                            {% for num in page_obj.paginator.page_range %}
-                                {% if page_obj.number == num %}
-                                <li class="page-item active">
-                                    <a class="page-link" href="#">{{ num }}</a>
-                                </li>
-                                {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
-                                <li class="page-item">
-                                    <a class="page-link" href="?page={{ num }}">{{ num }}</a>
-                                </li>
-                                {% endif %}
-                            {% endfor %}
-                            
-                            {% if page_obj.has_next %}
-                            <li class="page-item">
-                                <a class="page-link" href="?page={{ page_obj.next_page_number }}" aria-label="Next">
-                                    <span aria-hidden="true"><i class="las la-angle-right"></i></span>
-                                </a>
-                            </li>
-                            {% endif %}
-                        </ul>
-                    </div>
-                </div>
-                {% endif %}
-            </div>
-            <!-- Left Column Ends-->
-            
-            <!-- Right Column Starts-->
-            <div class="col-12 col-lg-3 sidebar pt-5 pt-lg-0">
-                <!-- Search Starts -->
-                <div class="search animated" data-animation="fadeInUp" data-animation-delay="200">
-                    <h2>Recherche</h2>
-                    <div class="searchform3">
-                        <form id="search3" method="get" action="/blog.html">
-                            <input type="text" class="form-control s" id="s3" name="q" placeholder="Mot-clé">
-                            <button type="submit" class="sbtn3"><i class="las la-search"></i></button>
-                        </form>
-                    </div>
-                </div>
-                <!-- Search Ends -->
-                
-                <!-- Categories Starts -->
-                <div class="categories animated" data-animation="fadeInUp" data-animation-delay="300">
-                    <h2>Catégories</h2>
-                    <ul>
-                        {% for category in categories %}
-                        <li class="clearfix">
-                            <div class="info">
-                                <h2><a href="{% url 'blog_category' category.slug %}">{{ category.name }}</a></h2>
-                                <h3>{{ category.description|truncatewords:10 }}</h3>
+                    <!-- Left Column Starts-->
+                    <div class="col-12 col-lg-9 pe-3 pe-lg-5">
+                        <div class="row g-0 g-lg-5">
+                            <!-- Blog Post Starts-->
+                            <div class="col-12 col-md-6">
+                                <div class="blog-post pb-md-2 animated" data-animation="fadeInUp" data-animation-delay="300">
+                                    <div class="pic pb-4">
+                                        <img src="assets/imgs/blog/1.jpg" class="img-fluid" alt="" >
+                                    </div>
+                                    <h4><a href="#">/TECHNOLOGY</a></h4>
+                                    <h2><a href="single-blog-post-left-sidebar.html">3 Four-Star Resorts Bolster Costa Rica’s Luxury Reputation</a></h2>
+                                    <p>
+                                        Cepteur sint occaecat cupidatat proident, taken possession
+                                        of my entire soul, like these sweet mornings of
+                                        springCepteur sint occaecat cupidt proident, taken
+                                        possession of my entire soul ...
+                                    </p>
+                                    <ul class="meta">
+                                        <li>
+                                            <a href=""><i class="las la-user-alt"></i> John</a>
+                                        </li>
+                                        <li>
+                                            <a href=""><i class="las la-calendar"></i> 10 Jan, 2020</a>
+                                        </li>
+                                        <li>
+                                            <a href=""><i class="lar la-comment"></i> 3</a>
+                                        </li>
+                                        <li>
+                                            <a href=""><i class="lar la-eye"></i> 5.5K</a>
+                                        </li>
+                                    </ul>
+                                </div>
                             </div>
-                            <div class="posts">[{{ category.posts.count }}]</div>
-                        </li>
-                        {% endfor %}
-                    </ul>
-                </div>
-                <!-- Categories Ends -->
-                
-                <!-- Posts Tabs Starts -->
-                <div class="posts-tabs animated" data-animation="fadeInUp" data-animation-delay="100">
-                    <ul class="nav" id="myTab" role="tablist">
-                        <li class="nav-item" role="presentation">
-                            <a class="nav-link active" id="popular-tab" data-bs-toggle="tab" href="#popular" role="tab">Populaires</a>
-                        </li>
-                        <li class="nav-item" role="presentation">
-                            <a class="nav-link" id="recent-tab" data-bs-toggle="tab" href="#recent" role="tab">Récents</a>
-                        </li>
-                    </ul>
-                    <div class="tab-content" id="myTabContent">
-                        <div class="tab-pane fade show active" id="popular" role="tabpanel">
-                            <ul>
-                                {% for post in popular_posts %}
-                                <li class="clearfix">
-                                    <div class="picture">
-                                        {% if post.thumbnail %}
-                                        <img src="{{ post.thumbnail.url }}" width="72" height="72" alt="{{ post.title }}">
-                                        {% else %}
-                                        <img src="{{ post.featured_image.url }}" width="72" height="72" alt="{{ post.title }}">
-                                        {% endif %}
+                            <!-- Blog Post Ends-->
+                            <!-- Blog Post Starts-->
+                            <div class="col-12 col-md-6">
+                                <div class="blog-post pb-md-2 animated" data-animation="fadeInUp" data-animation-delay="400">
+                                    <div class="pic pb-4">
+                                        <img src="assets/imgs/blog/2.jpg" class="img-fluid" alt="" >
                                     </div>
-                                    <div class="info">
-                                        <div class="caption"><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></div>
-                                        <div class="date">{{ post.publication_date|date:"d M, Y" }}</div>
+                                    <h4><a href="#">/TECHNOLOGY</a></h4>
+                                    <h2><a href="single-blog-post-without-sidebar.html">Imagine Losing 20 Pounds In 14 Days!</a></h2>
+                                    <p>
+                                        Cepteur sint occaecat cupidatat proident, taken possession
+                                        of my entire soul, like these sweet mornings of
+                                        springCepteur sint occaecat cupidt proident, taken
+                                        possession of my entire soul ...
+                                    </p>
+                                    <ul class="meta">
+                                        <li>
+                                            <a href=""><i class="las la-user-alt"></i> John</a>
+                                        </li>
+                                        <li>
+                                            <a href=""><i class="las la-calendar"></i> 10 Jan, 2020</a>
+                                        </li>
+                                        <li>
+                                            <a href=""><i class="lar la-comment"></i> 3</a>
+                                        </li>
+                                        <li>
+                                            <a href=""><i class="lar la-eye"></i> 5.5K</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <!-- Blog Post Ends-->
+                            <!-- Blog Post Starts-->
+                            <div class="col-12 col-md-6">
+                                <div class="blog-post pb-md-2 animated" data-animation="fadeInUp" data-animation-delay="100">
+                                    <div class="pic pb-4">
+                                        <img src="assets/imgs/blog/3.jpg" class="img-fluid" alt="" >
                                     </div>
-                                </li>
-                                {% endfor %}
-                            </ul>
+                                    <h4><a href="#">/TECHNOLOGY</a></h4>
+                                    <h2><a href="single-blog-post-left-sidebar.html">Burberry Brings London to LA, Including the Guards</a></h2>
+                                    <p>
+                                        Cepteur sint occaecat cupidatat proident, taken possession
+                                        of my entire soul, like these sweet mornings of
+                                        springCepteur sint occaecat cupidt proident, taken
+                                        possession of my entire soul ...
+                                    </p>
+                                    <ul class="meta">
+                                        <li>
+                                            <a href=""><i class="las la-user-alt"></i> John</a>
+                                        </li>
+                                        <li>
+                                            <a href=""><i class="las la-calendar"></i> 10 Jan, 2020</a>
+                                        </li>
+                                        <li>
+                                            <a href=""><i class="lar la-comment"></i> 3</a>
+                                        </li>
+                                        <li>
+                                            <a href=""><i class="lar la-eye"></i> 5.5K</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <!-- Blog Post Ends-->
+                            <!-- Blog Post Starts-->
+                            <div class="col-12 col-md-6">
+                                <div class="blog-post pb-md-2 animated" data-animation="fadeInUp" data-animation-delay="200">
+                                    <div class="pic pb-4">
+                                        <img src="assets/imgs/blog/4.jpg" class="img-fluid" alt="" >
+                                    </div>
+                                    <h4><a href="#">/TECHNOLOGY</a></h4>
+                                    <h2><a href="single-blog-post-right-sidebar.html">For the First Time, Lilly Pulitzer Hosts a Resort Preview</a></h2>
+                                    <p>
+                                        Cepteur sint occaecat cupidatat proident, taken possession
+                                        of my entire soul, like these sweet mornings of
+                                        springCepteur sint occaecat cupidt proident, taken
+                                        possession of my entire soul ...
+                                    </p>
+                                    <ul class="meta">
+                                        <li>
+                                            <a href=""><i class="las la-user-alt"></i> John</a>
+                                        </li>
+                                        <li>
+                                            <a href=""><i class="las la-calendar"></i> 10 Jan, 2020</a>
+                                        </li>
+                                        <li>
+                                            <a href=""><i class="lar la-comment"></i> 3</a>
+                                        </li>
+                                        <li>
+                                            <a href=""><i class="lar la-eye"></i> 5.5K</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <!-- Blog Post Ends-->
+                            <!-- Blog Post Starts-->
+                            <div class="col-12 col-md-6">
+                                <div class="blog-post pb-md-2 animated" data-animation="fadeInUp" data-animation-delay="100">
+                                    <div class="pic pb-4">
+                                        <img src="assets/imgs/blog/5.jpg" class="img-fluid" alt="" >
+                                    </div>
+                                    <h4><a href="#">/TECHNOLOGY</a></h4>
+                                    <h2><a href="single-blog-post-right-sidebar.html">For the First Time, Lilly Pulitzer Hosts a Resort Preview</a></h2>
+                                    <p>
+                                        Cepteur sint occaecat cupidatat proident, taken possession
+                                        of my entire soul, like these sweet mornings of
+                                        springCepteur sint occaecat cupidt proident, taken
+                                        possession of my entire soul ...
+                                    </p>
+                                    <ul class="meta">
+                                        <li>
+                                            <a href=""><i class="las la-user-alt"></i> John</a>
+                                        </li>
+                                        <li>
+                                            <a href=""><i class="las la-calendar"></i> 10 Jan, 2020</a>
+                                        </li>
+                                        <li>
+                                            <a href=""><i class="lar la-comment"></i> 3</a>
+                                        </li>
+                                        <li>
+                                            <a href=""><i class="lar la-eye"></i> 5.5K</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <!-- Blog Post Ends-->
+                            <!-- Blog Post Starts-->
+                            <div class="col-12 col-md-6">
+                                <div class="blog-post pb-md-2 animated" data-animation="fadeInUp" data-animation-delay="200">
+                                    <div class="pic pb-4">
+                                        <img src="assets/imgs/blog/6.jpg" class="img-fluid" alt="" >
+                                    </div>
+                                    <h4><a href="#">/TECHNOLOGY</a></h4>
+                                    <h2><a href="single-blog-post-right-sidebar.html">For the First Time, Lilly Pulitzer Hosts a Resort Preview</a></h2>
+                                    <p>
+                                        Cepteur sint occaecat cupidatat proident, taken possession
+                                        of my entire soul, like these sweet mornings of
+                                        springCepteur sint occaecat cupidt proident, taken
+                                        possession of my entire soul ...
+                                    </p>
+                                    <ul class="meta">
+                                        <li>
+                                            <a href=""><i class="las la-user-alt"></i> John</a>
+                                        </li>
+                                        <li>
+                                            <a href=""><i class="las la-calendar"></i> 10 Jan, 2020</a>
+                                        </li>
+                                        <li>
+                                            <a href=""><i class="lar la-comment"></i> 3</a>
+                                        </li>
+                                        <li>
+                                            <a href=""><i class="lar la-eye"></i> 5.5K</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <!-- Blog Post Ends-->
                         </div>
-                        <div class="tab-pane fade" id="recent" role="tabpanel">
-                            <ul>
-                                {% for post in recent_posts %}
-                                <li class="clearfix">
-                                    <div class="picture">
-                                        {% if post.thumbnail %}
-                                        <img src="{{ post.thumbnail.url }}" width="72" height="72" alt="{{ post.title }}">
-                                        {% else %}
-                                        <img src="{{ post.featured_image.url }}" width="72" height="72" alt="{{ post.title }}">
-                                        {% endif %}
-                                    </div>
-                                    <div class="info">
-                                        <div class="caption"><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></div>
-                                        <div class="date">{{ post.publication_date|date:"d M, Y" }}</div>
-                                    </div>
-                                </li>
-                                {% endfor %}
-                            </ul>
+                        <div class="row">
+                            <div class="col-12">
+                                <ul class="pagination pt-0 pt-md-4 pt-lg-5 animated" data-animation="fadeInUp" data-animation-delay="100">
+                                    <li class="page-item">
+                                        <a class="page-link" href="#" aria-label="Previous">
+                                        <span aria-hidden="true"><i class="las la-angle-left"></i></span>
+                                        </a>
+                                    </li>
+                                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                                    <li class="page-item active">
+                                        <a class="page-link" href="#">2</a>
+                                    </li>
+                                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                                    <li class="page-item">
+                                        <a class="page-link" href="#" aria-label="Next">
+                                        <span aria-hidden="true"
+                                            ><i class="las la-angle-right"></i
+                                            ></span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <!-- Posts Tabs Ends -->
-                
-                <!-- About Us Starts -->
-                <div class="about animated" data-animation="fadeInUp" data-animation-delay="100">
-                    <h2>À Propos</h2>
-<div class="description">
-    {% if sidebar_content.about %}
-        {{ sidebar_content.about.content }}
-    {% else %}
-        Bijoux & Créations est un atelier joaillier passionné créant des pièces uniques depuis 2010. 
-        Nous mêlons savoir-faire traditionnel et design contemporain pour vous offrir des bijoux 
-        qui racontent votre histoire.
-    {% endif %}
-</div>
-                </div>
-                <!-- About Us Ends -->
-                
-                <!-- Tags Starts -->
-                <div class="tags animated" data-animation="fadeInUp" data-animation-delay="300">
-                    <h2>Tags</h2>
-                    <div class="tag-list">
-                        {% for tag in tags %}
-                        <a href="{% url 'blog_tag' tag.slug %}">{{ tag.name }}</a>
-                        {% endfor %}
+                    <!-- Left Column Ends-->
+                    <!-- Right Column Starts-->
+                    <div class="col-12 col-lg-3 sidebar pt-5 pt-lg-0">
+                        <!-- Search Starts -->
+                        <div class="search animated" data-animation="fadeInUp" data-animation-delay="200">
+                            <h2>Search</h2>
+                            <div class="searchform3">
+                                <form id="search3">
+                                    <input type="text" class="form-control s" id="s3" placeholder="Type your keywork">
+                                    <button type="submit" class="sbtn3"><i class="las la-search"></i></button>
+                                </form>
+                            </div>
+                        </div>
+                        <!-- Search Ends -->
+                        <!-- Categories Starts -->
+                        <div class="categories animated" data-animation="fadeInUp" data-animation-delay="300">
+                            <h2>Categories</h2>
+                            <ul>
+                                <li class="clearfix">
+                                    <div class="info">
+                                        <h2><a href="">Web Development</a></h2>
+                                        <h3>Lorem ipsum dolor sit amet</h3>
+                                    </div>
+                                    <div class="posts">[30]</div>
+                                </li>
+                                <li class="clearfix">
+                                    <div class="info">
+                                        <h2><a href="">Multipurpose Site</a></h2>
+                                        <h3>Consectetur adipisicing elit sed</h3>
+                                    </div>
+                                    <div class="posts">[19]</div>
+                                </li>
+                                <li class="clearfix">
+                                    <div class="info">
+                                        <h2><a href="">Technology</a></h2>
+                                        <h3>Eiusmod tempor incididunt ut</h3>
+                                    </div>
+                                    <div class="posts">[40]</div>
+                                </li>
+                                <li class="clearfix">
+                                    <div class="info">
+                                        <h2><a href="">Free Support</a></h2>
+                                        <h3>Laboris nisi ut aliquip ex ea</h3>
+                                    </div>
+                                    <div class="posts">[28]</div>
+                                </li>
+                            </ul>
+                        </div>
+                        <!-- Categories Ends -->
+                        <!-- Posts Tabs Starts -->
+                        <div class="posts-tabs animated" data-animation="fadeInUp" data-animation-delay="100">
+                            <!-- Nav tabs -->
+                            <ul class="nav" id="myTab" role="tablist">
+                                <li class="nav-item" role="presentation">
+                                    <a class="nav-link active" id="popular-tab" data-bs-toggle="tab" href="#popular" role="tab" aria-controls="popular" aria-selected="true">Popular</a>
+                                </li>
+                                <li class="nav-item" role="presentation">
+                                    <a class="nav-link" id="recent-tab" data-bs-toggle="tab" href="#recent" role="tab" aria-controls="recent" aria-selected="false">Recent</a>
+                                </li>
+                            </ul>
+                            <div class="tab-content" id="myTabContent">
+                                <div class="tab-pane fade show active" id="popular" role="tabpanel" aria-labelledby="popular-tab">
+                                    <ul>
+                                        <li class="clearfix">
+                                            <div class="picture"><img src="assets/imgs/blog/popular-posts/1.jpg" width="72" height="72" alt="" ></div>
+                                            <div class="info">
+                                                <div class="caption"><a href="">Cepteur sint occae cat cupidatat proident ...</a></div>
+                                                <div class="date">Jan 03, 2021</div>
+                                            </div>
+                                        </li>
+                                        <li class="clearfix">
+                                            <div class="picture"><img src="assets/imgs/blog/popular-posts/2.jpg" width="72" height="72" alt="" ></div>
+                                            <div class="info">
+                                                <div class="caption"><a href="">Nunc molestie sapien tempor placerat ...</a></div>
+                                                <div class="date">Jan 03, 2021</div>
+                                            </div>
+                                        </li>
+                                        <li class="clearfix">
+                                            <div class="picture"><img src="assets/imgs/blog/popular-posts/3.jpg" width="72" height="72" alt="" ></div>
+                                            <div class="info">
+                                                <div class="caption"><a href="">Lorem ipsum dolor sit amet consectetur ...</a></div>
+                                                <div class="date">Jan 03, 2021</div>
+                                            </div>
+                                        </li>
+                                        <li class="clearfix">
+                                            <div class="picture"><img src="assets/imgs/blog/popular-posts/4.jpg" width="72" height="72" alt="" ></div>
+                                            <div class="info">
+                                                <div class="caption"><a href="">Nunc molestie sapien tempor placerat ...</a></div>
+                                                <div class="date">Jan 03, 2021</div>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="tab-pane fade" id="recent" role="tabpanel" aria-labelledby="recent-tab">
+                                    <ul>
+                                        <li class="clearfix">
+                                            <div class="picture"><img src="assets/imgs/blog/popular-posts/5.jpg" width="72" height="72" alt="" ></div>
+                                            <div class="info">
+                                                <div class="caption"><a href="">Nunc molestie sapien tempor placerat ...</a></div>
+                                                <div class="date">Jan 03, 2021</div>
+                                            </div>
+                                        </li>
+                                        <li class="clearfix">
+                                            <div class="picture"><img src="assets/imgs/blog/popular-posts/6.jpg" width="72" height="72" alt="" ></div>
+                                            <div class="info">
+                                                <div class="caption"><a href="">Nunc molestie sapien tempor placerat ...</a></div>
+                                                <div class="date">Jan 03, 2021</div>
+                                            </div>
+                                        </li>
+                                        <li class="clearfix">
+                                            <div class="picture"><img src="assets/imgs/blog/popular-posts/7.jpg" width="72" height="72" alt="" ></div>
+                                            <div class="info">
+                                                <div class="caption"><a href="">Nunc molestie sapien tempor placerat ...</a></div>
+                                                <div class="date">Jan 03, 2021</div>
+                                            </div>
+                                        </li>
+                                        <li class="clearfix">
+                                            <div class="picture"><img src="assets/imgs/blog/popular-posts/8.jpg" width="72" height="72" alt="" ></div>
+                                            <div class="info">
+                                                <div class="caption"><a href="">Nunc molestie sapien tempor placerat ...</a></div>
+                                                <div class="date">Jan 03, 2021</div>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Posts Tabs Ends -->
+                        <!-- About Us Starts -->
+                        <div class="about animated" data-animation="fadeInUp" data-animation-delay="100">
+                            <h2>About Us</h2>
+                            <div class="description">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. enim ad minim veniam, quis nostrud exercitation ullamco laboris.</div>
+                        </div>
+                        <!-- About Us Ends -->
+                        <!-- Photos Starts -->
+                        <div class="photos animated" data-animation="fadeInUp" data-animation-delay="200">
+                            <h2>Photos</h2>
+                            <div class="row popup-gallery">
+                                <div class="col-4"><a href="assets/imgs/sidebar/gallery/1.jpg" title="Pic Caption"><img src="assets/imgs/sidebar/gallery/1.jpg" class="img-fluid" alt=""></a></div>
+                                <div class="col-4"><a href="assets/imgs/sidebar/gallery/2.jpg" title="Pic Caption"><img src="assets/imgs/sidebar/gallery/2.jpg" class="img-fluid" alt=""></a></div>
+                                <div class="col-4"><a href="assets/imgs/sidebar/gallery/3.jpg" title="Pic Caption"><img src="assets/imgs/sidebar/gallery/3.jpg" class="img-fluid" alt=""></a></div>
+                                <div class="col-4"><a href="assets/imgs/sidebar/gallery/4.jpg" title="Pic Caption"><img src="assets/imgs/sidebar/gallery/4.jpg" class="img-fluid" alt=""></a></div>
+                                <div class="col-4"><a href="assets/imgs/sidebar/gallery/5.jpg" title="Pic Caption"><img src="assets/imgs/sidebar/gallery/5.jpg" class="img-fluid" alt=""></a></div>
+                                <div class="col-4"><a href="assets/imgs/sidebar/gallery/6.jpg" title="Pic Caption"><img src="assets/imgs/sidebar/gallery/6.jpg" class="img-fluid" alt=""></a></div>
+                                <div class="col-4"><a href="assets/imgs/sidebar/gallery/7.jpg" title="Pic Caption"><img src="assets/imgs/sidebar/gallery/7.jpg" class="img-fluid" alt=""></a></div>
+                                <div class="col-4"><a href="assets/imgs/sidebar/gallery/8.jpg" title="Pic Caption"><img src="assets/imgs/sidebar/gallery/8.jpg" class="img-fluid" alt=""></a></div>
+                                <div class="col-4"><a href="assets/imgs/sidebar/gallery/9.jpg" title="Pic Caption"><img src="assets/imgs/sidebar/gallery/9.jpg" class="img-fluid" alt=""></a></div>
+                            </div>
+                        </div>
+                        <!-- Photos Ends -->
+                        <!-- Tags Starts -->
+                        <div class="tags animated" data-animation="fadeInUp" data-animation-delay="300">
+                            <h2>Tags</h2>
+                            <div class="tag-list">                                        
+                                <a href="#" >Website</a> 
+                                <a href="#" >Responsive</a>
+                                <a href="#" >Multipurpose</a>
+                                <a href="#" >SEO</a>
+                                <a href="#" >Wordpress</a>
+                                <a href="#" >Clean Design</a>
+                                <a href="#" >Multipages</a>
+                            </div>
+                        </div>
+                        <!-- Tags Ends -->
                     </div>
+                    <!-- Right Column Ends-->
                 </div>
-                <!-- Tags Ends -->
             </div>
-            <!-- Right Column Ends-->
-        </div>
-    </div>
-</section>

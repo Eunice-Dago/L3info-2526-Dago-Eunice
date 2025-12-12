@@ -18,7 +18,7 @@
                 <div class="blog-post animated" data-animation="fadeInUp" data-animation-delay="{% cycle '300' '400' '100' '200' '100' '200' %}">
                     <img src="{{ post.image.url }}" class="img-fluid" alt="{{ post.title }}">
                     <div class="d-flex align-items-center text-muted mb-2">
-                        <h4 class="mb-0 me-3"><a href="#" class="text-reset text-decoration-none">{{ post.get_category_display }}</a></h4>
+                        <h4 class="mb-0 me-3"><a href="{% url 'website:blog' %}" class="text-reset text-decoration-none">{{ post.get_category_display }}</a></h4>
                         <span class="text-muted">•</span>
                         <p class="mb-0 ms-3 text-muted">{{ post.excerpt }}</p>
                     </div>

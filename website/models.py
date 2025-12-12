@@ -475,17 +475,11 @@ from django.utils.text import slugify
 
 class BlogCategory(models.Model):
     """Catégorie d'article de blog"""
-    name = models.CharField(max_length=100, verbose_name="Nom")
-    slug = models.SlugField(unique=True, max_length=100)
-    description = models.TextField(blank=True, verbose_name="Description")
-    icon_class = models.CharField(max_length=50, blank=True, verbose_name="Classe icône")
-    order = models.IntegerField(default=1, verbose_name="Ordre d'affichage")
-    
-    class Meta:
-        verbose_name = "Catégorie"
-        verbose_name_plural = "Catégories"
-        ordering = ['order', 'name']
-    
+    name = models.CharField(max_length=100)
+    slug = models.SlugField(unique=True, blank=True)
+    description = models.TextField(blank=True)
+    post_count = models.IntegerField(default=0)
+
     def __str__(self):
         return self.name
     
@@ -497,12 +491,8 @@ class BlogCategory(models.Model):
 
 class Tag(models.Model):
     """Tag pour les articles"""
-    name = models.CharField(max_length=50, verbose_name="Nom")
-    slug = models.SlugField(unique=True, max_length=50)
-    
-    class Meta:
-        verbose_name = "Tag"
-        verbose_name_plural = "Tags"
+    name = models.CharField(max_length=50)
+    slug = models.SlugField(unique=True, blank=True)
     
     def __str__(self):
         return self.name
@@ -512,165 +502,113 @@ class Tag(models.Model):
             self.slug = slugify(self.name)
         super().save(*args, **kwargs)
 
-
-from django.db import models
-from django.utils import timezone
-from django_resized import ResizedImageField
-from django.utils.text import slugify
 from django.urls import reverse
 
-class BlogPost(models.Model):
+class Post(models.Model):
     """Modèle simple pour les articles de blog"""
     
-    CATEGORY_CHOICES = [
-        ('inspiration', 'Inspiration'),
-        ('news', 'News'),
-        ('tips', 'Tips & Tricks'),
-        ('company', 'Company News'),
-        ('industry', 'Industry Insights'),
-    ]
-    
-    # Titre et contenu
     title = models.CharField(max_length=200)
-    slug = models.SlugField(max_length=200, unique=True, blank=True)
-    category = models.CharField(max_length=50, choices=CATEGORY_CHOICES, default='inspiration')
-    excerpt = models.TextField(max_length=300, help_text="Court extrait affiché sur la page d'accueil")
-    content = models.TextField(help_text="Contenu complet de l'article")
-    
-    # Image
-    image = ResizedImageField(
-        size=[800, 450],
-        quality=85,
-        upload_to='blog/',
-        help_text="Image d'illustration (format recommandé: 800x450px)"
-    )
-    
-    # Auteur et dates
-    author = models.CharField(max_length=100, default="Admin")
-    published_date = models.DateField(default=timezone.now)
-    
-    # Métriques (peuvent être mises à jour automatiquement ou manuellement)
-    view_count = models.PositiveIntegerField(default=0)
-    comment_count = models.PositiveIntegerField(default=0)
-    
-    # SEO et organisation
-    meta_description = models.CharField(max_length=160, blank=True)
-    is_featured = models.BooleanField(default=False, help_text="Mettre en avant sur la page d'accueil")
-    is_published = models.BooleanField(default=True)
-    order = models.PositiveIntegerField(default=0)
-    
-    # Dates automatiques
+    slug = models.SlugField(unique=True, blank=True)
+    content = models.TextField()
+    excerpt = models.TextField(blank=True, max_length=500)  # Pour l'aperçu
+    author = models.ForeignKey(User, on_delete=models.CASCADE)
+    category = models.ForeignKey(BlogCategory, on_delete=models.SET_NULL, null=True, blank=True)
+    tags = models.ManyToManyField(Tag, blank=True)
+    featured_image = models.ImageField(upload_to='blog/')
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    published = models.BooleanField(default=False)
+    views = models.IntegerField(default=0)
     
+    # Métadonnées pour la sidebar
     class Meta:
-        ordering = ['-published_date', '-created_at']
-        verbose_name = "Article de blog"
-        verbose_name_plural = "Articles de blog"
-    
-    def __str__(self):
-        return self.title
+        ordering = ['-created_at']
     
     def save(self, *args, **kwargs):
-        """Génère automatiquement le slug si vide"""
         if not self.slug:
             self.slug = slugify(self.title)
         super().save(*args, **kwargs)
     
-    def get_absolute_url(self):
-        """URL pour accéder à l'article en détail"""
-        return reverse('blog_detail', kwargs={'slug': self.slug})
+    def __str__(self):
+        return self.title
     
-    def increment_view_count(self):
+    def increment_views(self):
         """Incrémente le compteur de vues"""
-        self.view_count += 1
-        self.save(update_fields=['view_count'])
-    
-    @property
-    def formatted_date(self):
-        """Retourne la date formatée joliment"""
-        return self.published_date.strftime("%d %b, %Y")
-    
+        self.views += 1
+        self.save(update_fields=['views'])
 
 
 class Comment(models.Model):
-    """Commentaire sur un article"""
-    post = models.ForeignKey(BlogPost, on_delete=models.CASCADE, 
-                             related_name='comments', verbose_name="Article")
-    author_name = models.CharField(max_length=100, verbose_name="Nom")
-    author_email = models.EmailField(verbose_name="Email")
-    content = models.TextField(verbose_name="Commentaire")
-    is_approved = models.BooleanField(default=False, verbose_name="Approuvé")
-    created_at = models.DateTimeField(auto_now_add=True, verbose_name="Date")
+    """Commentaires sur les articles"""
+    post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='comments')
+    author_name = models.CharField(max_length=100)
+    author_email = models.EmailField()
+    content = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    approved = models.BooleanField(default=False)
     
     class Meta:
-        verbose_name = "Commentaire"
-        verbose_name_plural = "Commentaires"
         ordering = ['-created_at']
     
     def __str__(self):
-        return f"Commentaire par {self.author_name} sur {self.post.title}"
-
+        return f"Comment by {self.author_name} on {self.post.title}"
 
 class SidebarContent(models.Model):
-    """Contenu pour la sidebar du blog"""
+    """Contenu configurable pour la sidebar"""
     CONTENT_TYPE_CHOICES = [
-        ('about', 'À propos'),
-        ('popular_posts', 'Articles populaires'),
-        ('gallery', 'Galerie'),
+        ('about', 'About Us'),
+        ('photos', 'Gallery'),
+        ('popular', 'Popular Posts'),
+        ('recent', 'Recent Posts'),
+        ('categories', 'Categories'),
         ('tags', 'Tags'),
     ]
-    
-    content_type = models.CharField(max_length=20, choices=CONTENT_TYPE_CHOICES, 
-                                    verbose_name="Type de contenu")
-    title = models.CharField(max_length=100, verbose_name="Titre")
-    content = models.TextField(blank=True, verbose_name="Contenu")
-    is_active = models.BooleanField(default=True, verbose_name="Actif")
-    order = models.IntegerField(default=1, verbose_name="Ordre")
+    title = models.CharField(max_length=100)
+    content_type = models.CharField(max_length=20, choices=CONTENT_TYPE_CHOICES)
+    content = models.TextField(blank=True)
+    display_order = models.IntegerField(default=0)
+    is_active = models.BooleanField(default=True)
     
     class Meta:
-        verbose_name = "Contenu sidebar"
-        verbose_name_plural = "Contenus sidebar"
-        ordering = ['order', 'content_type']
+        ordering = ['display_order']
     
     def __str__(self):
-        return f"{self.get_content_type_display()} - {self.title}"
+        return self.title
 
+class GalleryImage(models.Model):
+    """Images pour la galerie de la sidebar"""
+    title = models.CharField(max_length=100, blank=True)
+    image = models.ImageField(upload_to='sidebar/gallery/')
+    uploaded_at = models.DateTimeField(auto_now_add=True)
+    
+    def __str__(self):
+        return self.title if self.title else f"Image {self.id}"
 
 class Testimonial(models.Model):
-    """Témoignage client"""
-    name = models.CharField(max_length=100, verbose_name="Nom")
-    location = models.CharField(max_length=100, verbose_name="Localisation", help_text="Ex: Los Angeles, USA")
-    content = models.TextField(verbose_name="Témoignage")
-    photo = models.ImageField(
-        upload_to='testimonials/',
-        blank=True,
-        null=True,
-        verbose_name="Photo"
-    )
-    photo_filename = models.CharField(
-        max_length=100,
-        blank=True,
-        help_text="Nom du fichier dans static (ex: '1.jpg')"
-    )
-    order = models.IntegerField(default=1, verbose_name="Ordre d'affichage")
-    is_active = models.BooleanField(default=True, verbose_name="Actif")
-    
+    name = models.CharField(max_length=100)
+    location = models.CharField(max_length=100, blank=True, null=True)
+    image = models.ImageField(upload_to='testimonials/', blank=True, null=True)
+    message = models.TextField()
+    order = models.PositiveIntegerField(default=0)  # pour trier
+
     class Meta:
-        verbose_name = "Témoignage"
-        verbose_name_plural = "Témoignages"
-        ordering = ['order', 'name']
-    
+        ordering = ['order']  # afficher selon l’ordre défini dans l’admin
+        verbose_name = "Testimonial"
+        verbose_name_plural = "Testimonials"
+
     def __str__(self):
-        return f"{self.name} - {self.location}"
+        return self.name
+
+class Testimonial1(models.Model):
+    titre1 = models.CharField(max_length=100)
+    titre2 = models.CharField(max_length=100)
+    image = models.ImageField(upload_to='testimonial1/')
+
+    def __str__(self):
+        return self.titre1
     
-    def get_photo_url(self):
-        """Retourne l'URL de la photo"""
-        if self.photo and hasattr(self.photo, 'url'):
-            return self.photo.url
-        elif self.photo_filename:
-            return f"/static/website/assets/imgs/testimonials/{self.photo_filename}"
-        return ""
+class Test(models.Model):
+    image = models.ImageField(upload_to='testimonial1/')
     
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db import models
@@ -2239,4 +2177,4 @@ class LienFooter(models.Model):
         verbose_name_plural = "Liens Footer"
     
     def __str__(self):
-        return f"{self.get_type_lien_display()}: {self.texte}"
+        return f"{self.get_type_lien_display()}: {self.texte}" 

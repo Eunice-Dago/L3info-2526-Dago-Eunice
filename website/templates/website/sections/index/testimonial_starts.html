@@ -1,43 +1,57 @@
 {% load static %}
 
-<!-- TESTIMONIALS STARTS -->
+<!-- TESTIMONIALS STARTS ========================================================================= -->
 <section class="testimonials">
     <div class="container">
         <div class="row align-items-start align-items-md-center">
+
+            <!-- Left block -->
             <div class="col-12 col-lg-6 col-xl-6 testimonials-block">
+        {% for test in testimonials1 %}
                 <div class="herotext animated" data-animation="fadeInUp" data-animation-delay="100">
-                    <div class="rightline pb-3"><span>Testimonials</span></div>
-                    <h2>Success stories from our client</h2>
+                    <div class="rightline pb-3"><span>{{ test.titre1 }}</span></div>
+                    <h2>{{ test.titre2 }}</h2>
                 </div>
-                
+        {% endfor %}
+
+
+                <!-- Dynamic testimonials carousel -->
                 <div class="testimonials-carousel pt-4 animated" data-animation="fadeInUp" data-animation-delay="300">
-                    {% for testimonial in testimonials %}
-                    {% if testimonial.is_active %}
+
+                    {% for t in testimonials %}
                     <div class="testimonial">
                         <div class="d-flex align-items-center">
                             <div class="pic">
-                                {% if testimonial.get_photo_url %}
-                                    <img src="{{ testimonial.get_photo_url }}" class="img-fluid" alt="{{ testimonial.name }}">
+                                {% if t.image %}
+                                    <img src="{{ t.image.url }}" class="img-fluid" alt="{{ t.name }}">
                                 {% else %}
-                                    <img src="{% static 'website/assets/imgs/testimonials/default.jpg' %}" class="img-fluid" alt="{{ testimonial.name }}">
+                                    <img src="{% static 'website/assets/imgs/default-user.png' %}"
+                                         class="img-fluid" alt="Default">
                                 {% endif %}
                             </div>
+
                             <div class="detail">
-                                <div class="name">{{ testimonial.name }}</div>
-                                <div class="designation">{{ testimonial.location }}</div>
+                                <div class="name">{{ t.name }}</div>
+                                <div class="designation">
+                                    {{ t.location|default:"Anonymous" }}
+                                </div>
                             </div>
                         </div>
-                        <p class="pt-3">"{{ testimonial.content }}"</p>
+
+                        <p class="pt-3">“ {{ t.message }} ”</p>
                     </div>
-                    {% endif %}
                     {% endfor %}
+
                 </div>
             </div>
-            
-            <div class="col-12 col-lg-6 col-xl-6 pe-3 ps-3 animated" data-animation="fadeInUp" data-animation-delay="400">
-                <img src="{% static 'website/assets/imgs/testimonials/big.png' %}" class="img-fluid" alt="">
+            {% for test in tests %}
+            <!-- Right image -->
+            <div class="col-12 col-lg-6 col-xl-6 pe-3 ps-3 animated"
+                 data-animation="fadeInUp" data-animation-delay="400">
+                <img src="{{ test.image.url }}" class="img-fluid" alt="">
             </div>
+            {% endfor %}
         </div>
     </div>
 </section>
-<!-- /.. TESTIMONIALS ENDS -->
+<!-- /.. TESTIMONIALS ENDS ========================================================================= -->
